@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "95423598929",
+    "firebase_url": "https://spitchdev.firebaseio.com",
+    "project_id": "spitchdev",
+    "storage_bucket": "spitchdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95423598929:android:2b6357dfb7df0117",
+        "android_client_info": {
+          "package_name": "com.spitch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95423598929-3jfb5q9fvi0bu4pd0k4nkpbd60sltv83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrxvc-CJZVYbMjB8mE6aPAP_d5e0PNp7g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95423598929:android:aa99488544a4939e",
+        "android_client_info": {
+          "package_name": "com.spitchtv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95423598929-3jfb5q9fvi0bu4pd0k4nkpbd60sltv83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrxvc-CJZVYbMjB8mE6aPAP_d5e0PNp7g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

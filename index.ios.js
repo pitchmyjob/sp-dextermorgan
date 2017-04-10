@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
+import Analytics from 'react-native-firebase-analytics'
 
 
 
@@ -85,7 +86,7 @@ export default class spitchtv extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!oui
+          Welcome to React Native!oui non
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
