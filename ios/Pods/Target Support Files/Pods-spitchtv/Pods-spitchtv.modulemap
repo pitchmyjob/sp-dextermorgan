@@ -1,0 +1,6 @@
+framework module Pods_spitchtv {
+  umbrella header "Pods-spitchtv-umbrella.h"
+
+  export *
+  module * { export * }
+}
