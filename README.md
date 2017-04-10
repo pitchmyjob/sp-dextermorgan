@@ -4,7 +4,7 @@
 
 ## IOS
 
-### Notification and Analytics
+### PushNotification
 
 active Push notification IOS : https://facebook.github.io/react-native/docs/pushnotificationios.html
 
@@ -47,3 +47,26 @@ and then type ```pod install```
 If app crash on launch : (cf https://github.com/evollu/react-native-fcm/issues/322 )
 On your Xcodeproj create a new group names Ressources and past your GoogleService-Info.plist
 
+### Analytics
+
+install react-native-firebase-analytics ( https://github.com/evollu/react-native-firebase-analytics )
+```
+npm install react-native-firebase-analytics --save
+react-native react-native-firebase-analytics
+```
+
+add config ( https://github.com/evollu/react-native-firebase-analytics#ios-configuration )
+
+```
++@import Firebase;
+
+...
+
+ - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+....
++ [FIRApp configure];
+}
+
+}
+```
