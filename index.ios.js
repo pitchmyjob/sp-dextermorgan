@@ -16,6 +16,7 @@ import {
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import Analytics from 'react-native-firebase-analytics'
 
+import Example from './Exemple';
 
 
 export default class spitchtv extends Component {
@@ -122,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('spitchtv', () => spitchtv);
+AppRegistry.registerComponent('spitchtv', () => Example);

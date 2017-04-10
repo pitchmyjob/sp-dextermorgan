@@ -15,12 +15,30 @@ import {
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import Analytics from 'react-native-firebase-analytics'
+import Camera from 'react-native-camera';
+
+import Example from './Exemple';
+
 
 export default class spitchtv extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {permissions: null};
+
+    this.camera = null;
+    
+    this.state = {
+      step:1,
+      camera: {
+        aspect: Camera.constants.Aspect.fill,
+        captureTarget: Camera.constants.CaptureTarget.cameraRoll,
+        type: Camera.constants.Type.back,
+        orientation: Camera.constants.Orientation.auto,
+        flashMode: Camera.constants.FlashMode.auto,
+      },
+      isRecording: false
+    };
+
   }
 
   componentDidMount() {
@@ -79,34 +97,102 @@ export default class spitchtv extends Component {
     });
   }
 
+  takePicture() {
+    const options = {};
+    //options.location = ...
+    this.camera.capture({metadata: options})
+      .then((data) => console.log(data))
+      .catch(err => console.error(err));
+  }
+
+  startRecording() {
+    console.log(this.camera)
+    if (this.camera) {
+      this.camera.capture({mode: Camera.constants.CaptureMode.video})
+          .then((data) => console.log(data))
+          .catch(err => console.error(err));
+      this.setState({
+        isRecording: true
+      });
+    }
+  }
+
+  stopRecording() {
+    if (this.camera) {
+      this.camera.stopCapture();
+      this.setState({
+        isRecording: false
+      });
+    }
+  }
+
+
+  render(){
+    return(
+        <View style={styles.container}>
+          <Camera
+            ref={(cam) => {
+              this.camera = cam;
+            }}
+            style={styles.preview}
+            aspect={this.state.camera.aspect}
+            captureTarget={this.state.camera.captureTarget}
+            type={this.state.camera.type}
+            flashMode={this.state.camera.flashMode}
+            defaultTouchToFocus
+            mirrorImage={false}
+            >
+
+             {
+              !this.state.isRecording
+              &&
+
+              <Text style={styles.capture} onPress={this.startRecording}>[CAPTURE]</Text>
+
+            }
+ 
+            {
+              this.state.isRecording
+              &&
+
+              <Text style={styles.capture} onPress={this.stopRecording}>[stop]</Text>
+
+            }
+
+          </Camera>
+        </View>
+    )
+  }
   
-  render() {
+  renderOld() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!oui oui monsieur non
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
 
-       
+
+        {this.renderCamera() } 
 
       </View>
     );
   }
-}
+} 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flexDirection: 'row',
+  },
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end', 
+    alignItems: 'center'
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    color: '#000',
+    padding: 10,
+    margin: 40
   },
   welcome: {
     fontSize: 20,
@@ -120,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('spitchtv', () => spitchtv);
+AppRegistry.registerComponent('spitchtv', () => Example);
