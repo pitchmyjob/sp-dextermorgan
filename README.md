@@ -70,3 +70,13 @@ add config ( https://github.com/evollu/react-native-firebase-analytics#ios-confi
 
 }
 ```
+
+## Android
+
+install react-native-fcm : (cf https://github.com/evollu/react-native-fcm)
+```
+npm install react-native-fcm --save
+react-native link react-native-fcm
+```
+and follow steps : 
+https://github.com/evollu/react-native-fcm#android-configuration
