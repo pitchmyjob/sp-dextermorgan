@@ -41,7 +41,7 @@ class Home extends Component {
                        <Text style={styles.textbutton1}>SE CONNECTER</Text>
                    </Button>
 
-                    <Button style={styles.button2} >
+                    <Button style={styles.button2} onPress={Actions.register}>
                        <Text style={styles.textbutton2}>S'INSCRIRE</Text>
                    </Button>
               </View>

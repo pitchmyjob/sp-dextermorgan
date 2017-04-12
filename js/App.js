@@ -10,6 +10,7 @@ import variables from '../native-base-theme/variables/commonColor';
 import configureStore from './configureStore';
 import Home from './components/home'
 import Login from './components/login'
+import Register from './components/register'
 
 
 const ConnectedRouter = connect()(Router);
@@ -18,10 +19,9 @@ const heightNavBar = Platform.select({ios: {paddingTop: 64}, android: {paddingTo
 
 const Scenes = Actions.create(
     <Scene key='root' >
-
-        <Scene key="home" component={Home} hideNavBar />
-        <Scene key="login" sceneStyle={heightNavBar} component={Login} hideNavBar={false} title="SE CONNECTER" navigationBarStyle={{backgroundColor:'white'}} initial={true} />   
-
+        <Scene key="home" initial={true} component={Home} hideNavBar />
+        <Scene key="login" sceneStyle={heightNavBar} component={Login} hideNavBar={false} title="SE CONNECTER" navigationBarStyle={{backgroundColor:'white'}}  />   
+        <Scene key="register" sceneStyle={heightNavBar} component={Register} hideNavBar={false} title="S'INSCRIRE" navigationBarStyle={{backgroundColor:'white'}}  />   
     </Scene>
 );
 

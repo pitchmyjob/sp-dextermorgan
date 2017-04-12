@@ -6,21 +6,9 @@ var width = Dimensions.get('window').width;
 
 export default {
   container: {
-    flex: 1
-  },
-  content:{
-  	flex: 1,
-  },
-  topcontainer:{
-  	flex:0.8,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center', 
-  },
-  botcontainer:{
-  	flex:1,
-  	alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom:85
   },
   btnfb:{
     width:width * .85,
@@ -33,7 +21,7 @@ export default {
     color: 'white',
   },
   btntwt:{
-    marginTop:20,
+    marginTop:30,
     height:50,
     width:width * .85,
     backgroundColor:'#1DA1F2'
@@ -43,21 +31,15 @@ export default {
     textAlign: 'center',
     color: 'white',
   },
-  ou:{
-  	position: 'absolute',
-  	top:0,
+  txt:{
+  	color:'#BABCBE',
+  	marginTop:50,
+  	fontSize:18,
+  	textAlign:'center'
   },
-  footer:{
-  	position: 'absolute',
-  	bottom:0,
-  	paddingBottom:30
-  },
-  forgetpwd:{
-  	fontSize:15,
-
-  },
-  form:{
-  	width:width * .85,
+  email:{
+  	color:'#0064D4',  	
+  	fontSize:18,
+  	textAlign:'center'
   }
-
-}; 
+}
