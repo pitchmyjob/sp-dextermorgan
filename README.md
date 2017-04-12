@@ -4,6 +4,54 @@
 
 ## IOS
 
+### Facebook SDK
+
+install fbsdk
+https://github.com/facebook/react-native-fbsdk#32-ios-project
+
+puis suivre step https://developers.facebook.com/docs/ios/getting-started/
+
+Ne pas oublier :
+ajouter “~/Documents/FacebookSDK” dans “Build Settings” > “Framework Search Paths” (cd https://tylermcginnis.com/installing-the-facebook-sdk-into-a-react-native-android-and-ios-app/ )
+
+```
+[[FBSDKApplicationDelegate sharedInstance] application:application
+                           didFinishLaunchingWithOptions:launchOptions];
+```
+```
+à mettre dans 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+....
+```
+juste avant 
+
+```
+return YES;
+}
+```
+
+le reste, mettre à la fin
+```
+/** faceboook analytics **/
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+  [FBSDKAppEvents activateApp];
+}
+
+
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+  return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                        openURL:url
+                                              sourceApplication:sourceApplication
+                                                     annotation:annotation];
+}
+```
+
 ### PushNotification
 
 active Push notification IOS : https://facebook.github.io/react-native/docs/pushnotificationios.html
@@ -80,3 +128,8 @@ react-native link react-native-fcm
 ```
 and follow steps : 
 https://github.com/evollu/react-native-fcm#android-configuration
+
+### Facebook SDK
+
+suivre doc : https://github.com/facebook/react-native-fbsdk
+
