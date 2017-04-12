@@ -3,17 +3,69 @@ import { connect } from 'react-redux';
 import { Image, View, TouchableOpacity } from 'react-native';
 import { Container, Text, Button, Footer, Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import { LoginButton, AccessToken, LoginManager , GraphRequest,
+  GraphRequestManager,} from 'react-native-fbsdk'
 
 import styles from './styles'
 
+
+
 class Register extends Component {
+
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+
+    const infoRequest = new GraphRequest(
+        '/me',
+        null,
+        this._responseInfoCallback,
+      );
+      // Start the graph request.
+    new GraphRequestManager().addRequest(infoRequest).start();
+
+    console.log(infoRequest)
+
+  }
+
+  _responseInfoCallback(error: ?Object, result: ?Object) {
+  if (error) {
+    console.log('Error fetching data: ' + error.toString());
+  } else {
+    console.log(result);
+  }
+}
+
+  facebook(){
+      LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
+        function(result) {
+          if (result.isCancelled) {
+            console.log('Login cancelled');
+          } else {
+            console.log('Login success with permissions: '
+              +result.grantedPermissions.toString());
+
+              AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    console.log(data.accessToken.toString())
+                  }
+                )
+          }
+        },
+        function(error) {
+          alert('Login fail with error: ' + error);
+        }
+      );
+  }
+
   render() {
     return (
       <Container style={styles.container}>
         
         <View style={{alignItems: 'center'}}>
 
-              <Button style={styles.btnfb} iconLeft>
+              <Button style={styles.btnfb} iconLeft onPress={() => this.facebook()}>
                  <Icon name='logo-facebook' />
                  <Text style={styles.textfb}>Via Facebook</Text>
               </Button>
@@ -33,6 +85,7 @@ class Register extends Component {
              </TouchableOpacity>
 
           </View>
+
         
       </Container>
     );
