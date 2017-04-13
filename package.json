@@ -16,6 +16,7 @@
     "react-native-fcm": "^6.2.0",
     "react-native-firebase-analytics": "^3.0.0",
     "react-native-router-flux": "^3.38.0",
+    "react-native-simple-auth": "^2.1.0",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-form": "^6.6.2",

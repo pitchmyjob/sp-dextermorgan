@@ -5,6 +5,16 @@
     <key>CFBundleURLTypes</key>
     <array>
       <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>spitchtv</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>spitchapp</string>
+        </array>
+      </dict>
+      <dict>
       <key>CFBundleURLSchemes</key>
       <array>
         <string>fb1117828788346797</string>

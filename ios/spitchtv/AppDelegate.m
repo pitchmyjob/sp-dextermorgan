@@ -15,6 +15,8 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
+#import "RCTLinkingManager.h"
+
 
 @implementation AppDelegate
 
@@ -75,10 +77,19 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
+  
+  NSString * scheme = (NSString*)url.scheme;
+  NSString * fbScheme = @"fb1117828788346797";
+  
+  if ([fbScheme isEqualToString:scheme]) {
   return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                         openURL:url
                                               sourceApplication:sourceApplication
                                                      annotation:annotation];
+  } else {
+    return [RCTLinkingManager application:application openURL:url
+                        sourceApplication:sourceApplication annotation:annotation];
+  }
 }
 
 @end

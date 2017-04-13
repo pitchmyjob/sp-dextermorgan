@@ -6,6 +6,8 @@ import { Actions } from 'react-native-router-flux';
 import { LoginButton, AccessToken, LoginManager , GraphRequest,
   GraphRequestManager,} from 'react-native-fbsdk'
 
+import { twitter } from 'react-native-simple-auth';
+
 import styles from './styles'
 
 
@@ -17,16 +19,21 @@ class Register extends Component {
   
     this.state = {};
 
-    const infoRequest = new GraphRequest(
-        '/me',
-        null,
-        this._responseInfoCallback,
-      );
-      // Start the graph request.
-    new GraphRequestManager().addRequest(infoRequest).start();
+    
 
-    console.log(infoRequest)
+  }
 
+  gotwitter(){
+      twitter({
+        appId: 'L9Ox3oTMSJ6DfNpNmrRQP3gpe',
+        appSecret: 'N6uDtuTOY2dVoAzshGPGiksPHEaWkIiUJSf26YmvDuia8iuU9h',
+        callback: 'spitchapp://',
+      }).then((info) => {
+          console.log(info)
+      }).catch((error) => {
+        // error.code
+        // error.description
+      });
   }
 
   _responseInfoCallback(error: ?Object, result: ?Object) {
@@ -57,6 +64,17 @@ class Register extends Component {
           alert('Login fail with error: ' + error);
         }
       );
+
+
+      const infoRequest = new GraphRequest(
+        '/me',
+        null,
+        this._responseInfoCallback,
+      );
+      // Start the graph request.
+    new GraphRequestManager().addRequest(infoRequest).start();
+
+    console.log(infoRequest)
   }
 
   render() {
@@ -70,7 +88,7 @@ class Register extends Component {
                  <Text style={styles.textfb}>Via Facebook</Text>
               </Button>
           
-             <Button style={styles.btntwt} iconLeft>
+             <Button style={styles.btntwt} iconLeft onPress={() => this.gotwitter()}>
                  <Icon name='logo-twitter' />
                  <Text style={styles.texttwt}>Via Twitter</Text>
              </Button>

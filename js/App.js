@@ -11,6 +11,7 @@ import configureStore from './configureStore';
 import Home from './components/home'
 import Login from './components/login'
 import Register from './components/register'
+import registerForm from './components/register/registerForm'
 
 
 const ConnectedRouter = connect()(Router);
@@ -21,7 +22,11 @@ const Scenes = Actions.create(
     <Scene key='root' >
         <Scene key="home" component={Home} hideNavBar />
         <Scene key="login" sceneStyle={heightNavBar} component={Login} hideNavBar={false} title="SE CONNECTER" navigationBarStyle={{backgroundColor:'white'}}  />   
-        <Scene key="register" initial={true} sceneStyle={heightNavBar} component={Register} hideNavBar={false} title="S'INSCRIRE" navigationBarStyle={{backgroundColor:'white'}}  />   
+        
+        <Scene key="register" sceneStyle={heightNavBar} component={Register} hideNavBar={false} title="S'INSCRIRE" navigationBarStyle={{backgroundColor:'white'}}  />   
+        <Scene key="registerForm" initial={true} sceneStyle={heightNavBar} component={registerForm} navigationBarStyle={{backgroundColor:'white'}}  />   
+        
+
     </Scene>
 );
 
