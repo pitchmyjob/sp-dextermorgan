@@ -119,6 +119,65 @@ add config ( https://github.com/evollu/react-native-firebase-analytics#ios-confi
 }
 ```
 
+### Twitter connect :
+https://github.com/adamjmcgrath/react-native-simple-auth
+```
+npm install --save react-native-simple-auth
+```
+puis install deep Linking : 
+https://facebook.github.io/react-native/docs/linking.html
+
+mettre : $(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS  dans Header Search Paths
+et drag RTCLinking dans Link Binary With Libraries
+
+Si pas de fdk-sdk, dans AppDelegate.m, ne pas mettre ce qu'il y a dans la doc mais mettre ça :
+
+```
+(BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+return [RCTLinkingManager application:application openURL:url
+sourceApplication:sourceApplication annotation:annotation];
+}
+```
+
+Si fdk-sdk, pour eviter colision avec Le "linking" fb, mettre ça à la place :
+
+```
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+  
+  NSString * scheme = (NSString*)url.scheme;
+  NSString * fbScheme = @"fb1117828788346797";
+  
+  if ([fbScheme isEqualToString:scheme]) {
+  return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                        openURL:url
+                                              sourceApplication:sourceApplication
+                                                     annotation:annotation];
+  } else {
+    return [RCTLinkingManager application:application openURL:url
+                        sourceApplication:sourceApplication annotation:annotation];
+  }
+```
+
+Dans Info.plist, ajouter dans 'CFBundleURLTypes'
+
+```
+<dict>
+  <key>CFBundleTypeRole</key>
+  <string>Editor</string>
+  <key>CFBundleURLName</key>
+  <string>spitchtv</string>
+  <key>CFBundleURLSchemes</key>
+  <array>
+    <string>spitchapp</string>
+  </array>
+</dict>
+```
+
 ## Android
 
 install react-native-fcm : (cf https://github.com/evollu/react-native-fcm)
@@ -132,4 +191,22 @@ https://github.com/evollu/react-native-fcm#android-configuration
 ### Facebook SDK
 
 suivre doc : https://github.com/facebook/react-native-fbsdk
+
+### Twitter connect :
+https://github.com/adamjmcgrath/react-native-simple-auth
+
+Add in AndroidManifest.xml "android:launchMode="singleTask" and :  
+```
+<activity
+    android:name=".MainActivity"
+    android:launchMode="singleTask"
+    ... >
+<intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="spitchapp" />
+</intent-filter>
+```
+
 
