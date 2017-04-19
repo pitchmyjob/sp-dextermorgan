@@ -3,12 +3,16 @@ var React = require('react-native');
 var { Dimensions } = React; 
 
 var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 export default {
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center', 
+  },
+  padcontainer:{
+    paddingBottom:height * 0.25
   },
   btnfb:{
     width:width * .85,
@@ -41,5 +45,27 @@ export default {
   	color:'#0064D4',  	
   	fontSize:18,
   	textAlign:'center'
+  },
+  bguser:{
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  imguser:{
+    width:115,
+    height:115,
+    borderRadius: 57
+  },
+  footer:{
+    position: 'absolute',
+    bottom:0,
+    paddingBottom:30
+  },
+  textwelcolme:{
+    fontSize:25,
+    paddingTop:30
+  },
+  form:{
+    width:width * .85,
+    marginTop:30
   }
 }

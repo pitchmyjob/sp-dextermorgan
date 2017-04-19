@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
 
 import configureStore from './configureStore';
 
@@ -15,6 +16,7 @@ class Setup extends Component {
       store: configureStore(() => this.setState({ isLoading: false })),
     };
   }
+
 
   render() {
     return (

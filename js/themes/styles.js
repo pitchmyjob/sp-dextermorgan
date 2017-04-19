@@ -11,6 +11,11 @@ export default {
 		marginTop:10,
 		marginBottom:10
 	},
+	inputGroupError:{
+		borderColor:'red',
+		marginTop:10,
+		marginBottom:10,
+	},
 	buttonGradient:{
 		padding:0,
 		width:width,
@@ -27,4 +32,14 @@ export default {
 		color:'white',
 		fontSize:18
 	},
+	buttonFacebook:{
+    	width:width * .85,
+    	height:50,
+    	backgroundColor:'#3C5A99'
+    },
+    textFacebook:{
+  		flex: 1,
+    	textAlign: 'center',
+    	color: 'white',
+    },
 }

@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form'
+
+import { Field } from 'redux-form'
 import { View, TouchableOpacity, Image} from 'react-native';
 import { Container, Text, Button, Icon, InputGroup, Input, Form, Item } from 'native-base';
 
 import styles from './styles'
 
 import { renderInput } from '../../utils/forms/renderers'
-import { ButtonGradient } from '../../themes/base'
+import { isRequired } from '../../utils/forms/validators'
 
+import { ButtonFacebook, ButtonGradient } from '../../themes/base'
+
+import Facebook from './facebook/facebookContainer'
 
 
 class Login extends Component {
+
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+  }
+
 
   render() {
 
@@ -24,10 +34,7 @@ class Login extends Component {
 
             <View style={{alignItems: 'center'}}>
 
-                <Button style={styles.btnfb} iconLeft>
-                   <Icon name='logo-facebook' />
-                   <Text style={styles.textfb}>Via Facebook</Text>
-                </Button>
+               <Facebook />
             
                <Button style={styles.btntwt} iconLeft>
                    <Icon name='logo-twitter' />
@@ -50,10 +57,11 @@ class Login extends Component {
 
                           
                            <Field
-                              name="email"
+                              name="username"
                               component={renderInput}
-                              placeholder="Adresse email"
-                              icon="md-mail"
+                              placeholder="Nom d'utilisateur ou email"
+                              icon="md-person"
+                              validate={isRequired}
                             />
                          
                           <Field
@@ -62,6 +70,7 @@ class Login extends Component {
                               component={renderInput}
                               placeholder="Mot de passe"
                               icon="md-lock"
+                              validate={isRequired}
                             />
 
                             <TouchableOpacity style={{alignItems: 'flex-end'}}>
@@ -77,7 +86,7 @@ class Login extends Component {
               
 
                 <View style={styles.footer}>
-                    <ButtonGradient handleSubmit={handleSubmit} text="SE CONNECTER" />
+                    <ButtonGradient onPress={handleSubmit} text="SE CONNECTER" />
                 </View>
 
           </View>
@@ -88,13 +97,4 @@ class Login extends Component {
   }
 }
 
-
-const config = {
-  form: 'LoginForm',
-  onSubmit: (values, dispatch, props) => {
-      console.log(values)
-  },
-}
-
-
-export default connect(null, null)(reduxForm(config)(Login));
+export default Login
