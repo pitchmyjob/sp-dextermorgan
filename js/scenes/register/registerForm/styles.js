@@ -6,10 +6,12 @@ var width = Dimensions.get('window').width;
 
 export default {
   container: {
-    flex: 1
+    flex: 1,
+    height:null,
+    width:null 
   },
   topcontainer:{
-    flex:0.5,
+    flex:1,
     alignItems: 'center',
     justifyContent: 'center', 
   },
@@ -17,9 +19,21 @@ export default {
     flex:1,
   },
   footer:{
-  	position: 'absolute',
-  	bottom:0,
-  	paddingBottom:30
+    borderWidth:0,
+    backgroundColor:'white',
+    height:null, 
+    paddingBottom:20,
+    shadowOffset: {height: 0, width: 0},
+    shadowOpacity: 0,
+    elevation: 0 
+  },
+  bodyfooter:{
+    flex:1,
+    alignItems: 'center', 
+    justifyContent: 'center',
+    shadowOffset: {height: 0, width: 0},
+    shadowOpacity: 0,
+    elevation: 0
   },
   form:{
   	width:width * .85,

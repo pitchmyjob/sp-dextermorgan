@@ -3,12 +3,18 @@ var React = require('react-native');
 var { Dimensions } = React; 
 
 var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 export default {
   container: {
     flex: 1,
     width: null,
-    height: null,
+    height: null
+  },
+  bgcontainer:{
+    flex: 1,
+    width: null,
+    height: null
   },
   topcontainer:{
     flex:1,

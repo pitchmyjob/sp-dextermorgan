@@ -6,21 +6,25 @@ var width = Dimensions.get('window').width;
 
 export default {
   container: {
-    flex: 1
+    flex: 1,
+    height:null,
+    width:null
   },
   content:{
   	flex: 1,
   },
   topcontainer:{
-  	flex:0.8,
+  	flex:1,
     alignItems: 'center',
     justifyContent: 'center', 
   },
   botcontainer:{
-  	flex:1,
-  	alignItems: 'center',
-    justifyContent: 'center',
+  	flex:0.8,
     paddingBottom:85
+  },
+  center:{
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   btnfb:{
     width:width * .85,
@@ -45,16 +49,13 @@ export default {
   },
   ou:{
   	position: 'absolute',
-  	top:0,
+  	bottom:0,
   },
   footer:{
-  	position: 'absolute',
-  	bottom:0,
-  	paddingBottom:30
+  	paddingTop:20
   },
   forgetpwd:{
   	fontSize:15,
-
   },
   form:{
   	width:width * .85,

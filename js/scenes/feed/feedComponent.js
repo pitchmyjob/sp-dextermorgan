@@ -22,6 +22,11 @@ class Feed extends Component {
               <Text style={styles.dg}>
                   BONJOUR ENCULE
               </Text>
+              <Button title="deco" onPress={ () => this.props.logout() }>
+              <Text style={styles.fg}>
+                deco
+              </Text>
+              </Button>
         </View>
 
       </Container>

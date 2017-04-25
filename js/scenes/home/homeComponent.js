@@ -24,14 +24,14 @@ class Home extends Component {
 
     setTimeout(() => {
       verifyAccessToken()
-    }, 1500)
+    }, 1000)
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.auth.status == 'unauthorized'){
       Animated.timing(this.state.fadeAnim, {toValue: 3000, duration: 3000}).start();
       this.setState({home:true})
-      this.setState({top:this.moveIn(30,165)})
+      this.setState({top:this.moveIn(30,200)})
     }
   }
 
@@ -64,17 +64,19 @@ class Home extends Component {
   render() {
 
     return (
-      <Container >
+      <Container style={styles.container}>
 
-        <Image source={require('../../../images/home-bg.png')} style={styles.container} >
+        <Image source={require('../../../images/home-bg.png')} style={styles.bgcontainer} >
           
           <Animated.View style={[styles.topcontainer, this.state.top]}>
  
               <Image style={styles.logo} source={require('../../../images/home-logo.png')} />
-              
-              <Text style={styles.textlogo}>
-                Spitch
-              </Text>
+
+              {this.state.home &&
+                  <Animated.Text style={[styles.textlogo, this.fadeIn(100, 0)]}>
+                    Spitch
+                  </Animated.Text>
+              }
 
           </Animated.View>
 

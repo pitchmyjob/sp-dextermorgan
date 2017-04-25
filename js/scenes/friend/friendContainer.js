@@ -1,12 +1,22 @@
 import { connect } from 'react-redux';
 
+import { generateFacebookList } from '../../actions/relations'
 import Friend from './friendComponent';
 
 
 function mapStateToProps(state, ownProps) {
   return { 
-    user: state.user
+    user: state.user,
+    relation: state.relation.facebook
   };
 }
 
-export default connect(mapStateToProps, null)(Friend);
+function mapDispatchToProps(dispatch){
+  return {
+    generateFacebookList: (value) => {
+      return dispatch(generateFacebookList(value))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Friend);

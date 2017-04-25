@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form'
+import { Alert } from 'react-native'
 
 import Login from './loginComponent'
 import { login } from '../../actions/auth'
@@ -12,17 +13,16 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
-
 const config = {
   form: 'LoginForm',
   onSubmit: (values, dispatch, props) => {
       dispatch(login(values))
   },
+  onSubmitFail : (error, dispatch,submitError) => {
+    console.log(error)
+    console.log(submitError)
+  }
 }
 
 
-export default connect(null, null)(reduxForm(config)(Login));
+export default connect(mapStateToProps, null)(reduxForm(config)(Login));

@@ -14,6 +14,10 @@ export const AUTH_REJECTED = `${AUTH}_REJECTED`
 
 // Auth requested
 export const AUTH_REQUESTED = 'AUTH_REQUESTED'
+
+
+// Auth logout
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
  
 
 //Sign Up User - register

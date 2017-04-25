@@ -14,6 +14,10 @@ export class AppAuthToken {
   		return nativeStore.get(this.SESSION_TOKEN_KEY)
   	}
 
+  	deleteSessionToken(){
+  		return nativeStore.delete(this.SESSION_TOKEN_KEY)
+  	}
+
 }
 
 // export const getAccessToken = () => nativeStore.get('accessToken')

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Text, Icon, Button } from 'native-base';
-import { LoginButton, AccessToken, LoginManager , GraphRequest, GraphRequestManager} from 'react-native-fbsdk'
+import { AccessToken, LoginManager } from 'react-native-fbsdk'
 
 import styles from '../../../themes/styles'
 
@@ -17,6 +17,7 @@ class Facebook extends Component {
   }
 
 
+
   _responseInfoCallback(error: ?Object, result: ?Object) {
     if (error) {
       console.log('Error fetching data: ' + error.toString());
@@ -27,20 +28,19 @@ class Facebook extends Component {
 
   facebook(){
       
-      const infoRequest = new GraphRequest(
-        '/me?fields=first_name,last_name,email,picture.type(normal)',
-        null,
-        this._responseInfoCallback,
-      );
-
       LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
         function(result) {
           if (result.isCancelled) {
             console.log('Login cancelled');
           } else {
-              new GraphRequestManager().addRequest(infoRequest).start();
+
+              AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    this.props.authFacebook(data.accessToken.toString())
+                  }
+                )
           }
-        },
+        }.bind(this),
         function(error) {
           alert('Login fail with error: ' + error);
         }

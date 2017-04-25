@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 
 import Feed from './feedComponent' ;
 
+import { logout } from '../../actions/auth'
+
 
 function mapStateToProps(state, ownProps) {
   return { 
@@ -11,7 +13,11 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch){
-  return {}
+  return {
+  	logout: () => {
+  		dispatch(logout())
+  	}
+  }
 }
 
 

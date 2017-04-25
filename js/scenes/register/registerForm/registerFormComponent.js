@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { Field } from 'redux-form'
 
 import { Image, View, TouchableOpacity, Animated, KeyboardAvoidingView} from 'react-native';
-import { Container, Text, Button, Footer, Icon } from 'native-base';
+import { Container, Text, Button, Footer, Icon, Spinner, Content} from 'native-base';
 
 import { renderInput } from '../../../utils/forms/renderers'
 import { isRequired } from '../../../utils/forms/validators'
 import { ButtonGradient } from '../../../themes/base'
+
+import StepOneContainer from './stepOne/stepOneContainer'
+import StepTwoContainer from './stepTwo/stepTwoContainer'
+import StepThreeContainer from './stepThree/stepThreeContainer'
+import StepFourContainer from './stepFour/stepFourContainer'
 
 import styles from './styles'
 
@@ -18,107 +23,32 @@ class RegisterForm extends Component {
     super(props);
   
     this.state = {
-      fadeAnim: new Animated.Value(0),
       'step': 1
     };
+
+    this.nextStep = this.nextStep.bind(this)
   }
 
-  componentDidMount() {
-      Animated.timing(this.state.fadeAnim, {toValue: 3000, duration: 3000}).start();
+  componentWillMount() {
+    this.props.reset()
   }
 
-
-  fadeIn(delay, from = 0) {
-    const {fadeAnim} = this.state;
-    return {
-      opacity: fadeAnim.interpolate({
-        inputRange: [delay, Math.min(delay + 500, 3000)],
-        outputRange: [0, 1],
-        extrapolate: 'clamp',
-      }),
-      transform: [{
-        translateY: fadeAnim.interpolate({
-          inputRange: [delay, Math.min(delay + 500, 3000)],
-          outputRange: [from, 0],
-          extrapolate: 'clamp',
-        }),
-      }],
-    };
+  nextStep() {
+    this.setState({step:this.state.step + 1})
   }
+
 
   render() {
 
-    const { handleSubmit, auth } = this.props;
+    const { step } = this.state
 
     return (
       <Container style={styles.container}>
 
-      
-        <View style={styles.topcontainer}>
-
-          <View style={{alignItems: 'center'}}>
-              <TouchableOpacity>
-                  <Image
-                    source={require('../../../../images/picture.png')} 
-                  />
-              </TouchableOpacity>            
-          </View>
-          
-
-        </View>
-        <KeyboardAvoidingView style={styles.botcontainer} behavior="padding">
-            <View style={{alignItems: 'center'}}>
-                <View style={[styles.form]}>
-
-                  <Animated.View style={this.fadeIn(50, -20)}>
-                      <Field
-                        name="username"
-                        component={renderInput}
-                        placeholder="Nom d'utilisateur"
-                        icon="md-person"
-                        //validate={isRequired}
-                      />
-                    </Animated.View>
-
-                  <Animated.View style={this.fadeIn(150, -20)}>
-                    <Field
-                        name="email"
-                        component={renderInput}
-                        placeholder="Adresse email"
-                        icon="md-mail"
-                        //validate={isRequired}
-                      />
-                  </Animated.View>
-        
-              
-                    <Animated.View style={this.fadeIn(250, -20)}>
-                        <Field
-                          name="name"
-                          component={renderInput}
-                          placeholder="Nom complet"
-                          icon="md-person"
-                        />
-                    </Animated.View>
-
-                    <Animated.View style={this.fadeIn(350, -20)}>
-                        <Field
-                            name="password"
-                            secure={true}
-                            component={renderInput}
-                            placeholder="Mot de passe"
-                            icon="md-lock"
-                            //validate={isRequired}
-                          />
-                      </Animated.View>
-                    
-                      
-                </View>
-            </View>
-            <View style={styles.footer}>
-                <ButtonGradient onPress={handleSubmit} text="S'INSCRIRE" />
-            </View>
-        </KeyboardAvoidingView>
-
+          {step === 1 && <StepOneContainer nextStep={this.nextStep} />}
+          {step === 2 && <StepTwoContainer nextStep={this.nextStep} />}
+          {step === 3 && <StepThreeContainer nextStep={this.nextStep} />}
+          {step === 4 && <StepFourContainer nextStep={this.nextStep} />}
 
       </Container>
     );

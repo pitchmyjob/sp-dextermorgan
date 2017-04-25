@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form'
+import { reduxForm, SubmissionError } from 'redux-form'
 import { Actions } from 'react-native-router-flux'
+import { Alert } from 'react-native'
 
-import { asyncValidateUserNotExists } from '../../../utils/forms/validators'
-
-import { signUp, verifAuthFacebook } from '../../../actions/auth'
+import { signUp, verifAuthFacebook, UserNotExists } from '../../../actions/auth'
 
 import FacebookForm from './facebookFormComponent'
 
@@ -22,15 +21,20 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(verifAuthFacebook(values))
     }
   }
-}
+} 
 
 const config = {
-  form: 'FacebookForm',
+  form: 'FacebookForm', 
   onSubmit: (values, dispatch, props) => {
-      return dispatch(signUp(values, true))
-  },
-  asyncValidate: asyncValidateUserNotExists,
-  asyncBlurFields: ['username']
+      return dispatch(UserNotExists({username:values['username']}))
+      .then((response) => {
+
+          return dispatch(signUp(values, "facebook"))
+
+      }).catch((error) => {
+          throw new SubmissionError({ username: "Ce nom d'utilisateur est déjà utilisé" })
+      })  
+  }
 }
 
 

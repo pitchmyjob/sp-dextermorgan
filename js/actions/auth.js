@@ -1,44 +1,40 @@
 import { appAuthToken } from '../utils/storage'
+import { Alert } from 'react-native'
 import { Actions, ActionConst } from 'react-native-router-flux'
 import jwtDecode from 'jwt-decode';
 
-import { AUTH_REQUESTED, AUTH_SIGNUP_USER, AUTH_USER_NOT_EXISTS, AUTH } from '../constants/auth'
+import { AUTH_REQUESTED, AUTH_SIGNUP_USER, AUTH_USER_NOT_EXISTS, AUTH, AUTH_LOGOUT} from '../constants/auth'
 import { USER_FROM_TOKEN } from '../constants/users'
 
-import request from '../utils/request'
-import { handleFormErrors  } from '../utils/forms/formatters'
+import { api }  from '../utils/request'
 
 
 export const authUser = (values) => {
   return {
       type: AUTH,
-      payload: request.post('/auth/token-auth/', values)
+      payload: api.post('/auth/token-auth/', values)
   } 
 }
 
-export const authFacebook = (values) => {
-  let login = {
-    'email' : values['email'],
-    'login_id' : values['id'],
-  }
+export const authFacebook = (token) => {
   return {
       type: AUTH,
-      payload: request.post('/auth/facebook/', login)
+      payload: api.post('/auth/facebook/', {token})
   }
 }
 
 export const UserNotExists = (values) => {
     return {
         type: AUTH_USER_NOT_EXISTS,
-        payload: request.post('/auth/check/', values)
+        payload: api.post('/auth/check/', values)
     }
 }
 
 export const authSignupUser = (values, rs) => {
-    endpoint = rs ? '/auth/register/rs/' : '/auth/register/'
+    endpoint = rs ? '/auth/register/'+rs+'/' : '/auth/register/'
     return {
         type: AUTH_SIGNUP_USER,
-        payload: request.post(endpoint, values)
+        payload: api.post(endpoint, values)
     }
 }
 
@@ -53,6 +49,7 @@ export const verifAuthFacebook = (values) => {
   return function(dispatch) {
     dispatch(authFacebook(values))
       .then((response) => {
+          appAuthToken.storeSessionToken(response.action.payload.data.token) 
           dispatch(userFromToken(response.action.payload.data.token))
           Actions.tabbar({type: "reset"})
       }).catch((error) => {
@@ -69,7 +66,8 @@ export const verifyAccessToken = () => {
         if (!accessToken) {
           dispatch({type:AUTH_REQUESTED})
         } else {
-          console.log('log ')
+          dispatch(userFromToken(accessToken))
+          Actions.tabbar({type: "reset"}) 
         }
       })
   }
@@ -81,11 +79,12 @@ export const login = (values) => {
     dispatch(authUser(values))
     .then((response) => {
 
+          appAuthToken.storeSessionToken(response.action.payload.data.token) 
           dispatch(userFromToken(response.action.payload.data.token))
           Actions.tabbar({type: "reset"})
 
       }).catch((error) => {
-          console.log(error)
+          Alert.alert('Echec de la connexion', "Veuillez vérifier votre nom d'utilisateur et votre email et ressayez.")
       })
   }
 }
@@ -96,11 +95,29 @@ export const signUp = (values, rs = false) => {
     dispatch(authSignupUser(values, rs))
       .then((response) => {
 
+          appAuthToken.storeSessionToken(response.action.payload.data.token)          
           dispatch(userFromToken(response.action.payload.data.token))
-          Actions.tabbar({type: "reset"})
+          Actions.friend({type: "reset"})
 
       }).catch((error) => {
-          console.log(error)
+          Alert.alert('Erreur', "Veuillez ressayer")
       })
+  }
+}
+
+export const authEmailSignUp = (token) => {
+  return function(dispatch) { 
+      appAuthToken.storeSessionToken(token)          
+      dispatch(userFromToken(token))
+  }
+}
+
+
+
+export const logout = () => {
+  return function(dispatch){
+      appAuthToken.deleteSessionToken()
+      dispatch({type:AUTH_LOGOUT})
+      Actions.home({type:"reset"})
   }
 } 

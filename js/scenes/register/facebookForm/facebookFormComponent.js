@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field } from 'redux-form'
 
 import { Image, View, TouchableOpacity, Animated} from 'react-native';
-import { Container, Text, Button, Footer, InputGroup, Input, Icon} from 'native-base';
+import { Container, Text, Button, Footer, InputGroup, Input, Icon, Spinner} from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { LoginButton, AccessToken, LoginManager , GraphRequest,
   GraphRequestManager,} from 'react-native-fbsdk'
@@ -10,7 +10,7 @@ import { LoginButton, AccessToken, LoginManager , GraphRequest,
 import { renderInput } from '../../../utils/forms/renderers'
 import { isRequired } from '../../../utils/forms/validators'
 
-import { ButtonGradient } from '../../../themes/base'
+import { ButtonGradient, ButtonLoaderGradient } from '../../../themes/base'
 
 import styles from './styles'
 
@@ -21,14 +21,16 @@ class FacebookForm extends Component {
   constructor(props) {
     super(props);
   
-    this.state = {
+    this.state = { 
       form:false
     };
+
+    
 
     this._responseInfoCallback = this._responseInfoCallback.bind(this)
 
     const infoRequest = new GraphRequest(
-        '/me?fields=first_name,last_name,email,picture.type(normal)',
+        '/me?fields=first_name,picture.type(normal)',
         null,
         this._responseInfoCallback,
       );
@@ -42,13 +44,11 @@ class FacebookForm extends Component {
       console.log('Error fetching data: ' + error.toString());
     } else {
 
-        this.props.change('email', result.email);
-        this.props.change('first_name', result.first_name);
-        this.props.change('last_name', result.last_name);
-        this.props.change('photo', result.picture.data.url);
-        this.props.change('login_type', 'facebook');
-        this.props.change('login_id', result.id);
-
+        AccessToken.getCurrentAccessToken().then(
+          (data) => {
+            this.props.change('token', data.accessToken.toString())
+          }
+        )
         this.setState({
           form:true,
           photo:result.picture.data.url,
@@ -62,6 +62,18 @@ class FacebookForm extends Component {
 
 
     const { handleSubmit, auth, fields } = this.props;
+    let btn = null;
+    if( auth.loading || this.props.submitting )
+    {
+        btn = (
+          <ButtonLoaderGradient />
+        )
+    } else {
+      
+       btn = (
+        <ButtonGradient onPress={handleSubmit} text="S'INSCRIRE"/>
+      )
+    }
 
     return (
       <Container style={styles.container}>
@@ -92,12 +104,12 @@ class FacebookForm extends Component {
             </View>
 
               
-            <View style={styles.footer}>
-                  <ButtonGradient onPress={handleSubmit} text="S'INSCRIRE"/>
+              <View style={styles.footer}>
+                  { btn }
               </View>
           </View> 
           || 
-          <Text style={{}}> Loading </Text>
+          <Spinner color='blue' />
         }
       </Container>
     );

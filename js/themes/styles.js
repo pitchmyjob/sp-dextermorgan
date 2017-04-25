@@ -42,4 +42,23 @@ export default {
     	textAlign: 'center',
     	color: 'white',
     },
+
+    viewButtonTransparent:{
+    	width:width * .84,
+    	backgroundColor:'white',
+    	flex:1,
+    	marginTop:2,
+    	marginBottom:2,
+    	borderTopLeftRadius:6,
+    	borderTopRightRadius:6,
+    	borderBottomLeftRadius:6,
+    	borderBottomRightRadius:6,
+    	alignItems: 'center',
+		justifyContent: 'center', 
+    },
+    textButtonTransparent:{
+		backgroundColor: 'rgba(0,0,0,0)',
+		color:'#3023AE',
+		fontSize:18
+	},
 }
