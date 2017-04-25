@@ -45,7 +45,7 @@ class BackButton extends React.Component {
 const Scenes = Actions.create(
     <Scene key='root' >
 
-        <Scene key="home" initial component={Home} hideNavBar  />
+        <Scene key="home"  component={Home} hideNavBar  />
 
         <Scene key="login" 
           component={Login} title="SE CONNECTER"
@@ -62,7 +62,7 @@ const Scenes = Actions.create(
           navigationBarStyle={{backgroundColor:'transparent', 'borderBottomColor':'white'}} 
           leftButtonIconStyle = {{ tintColor:'#4A4A4A'}}  />
 
-        <Scene key="registerPhoto" 
+        <Scene key="registerPhoto" initial
           component={RegisterPhoto}
           rightTitle="Passer" onRight={() => Actions.friend()} rightButtonTextStyle={{'color':'#BABCBE'}}
           leftButtonIconStyle = {{ tintColor:'#4A4A4A'}}

@@ -20,6 +20,7 @@ export default {
   },
   footer:{
     borderWidth:0,
+    borderColor:'white',
     backgroundColor:'white',
     height:null, 
     paddingBottom:20,
