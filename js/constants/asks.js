@@ -1,0 +1,6 @@
+
+//Create
+export const CREATE_ASK = 'CREATE_ASK'
+export const CREATE_ASK_PENDING = `${CREATE_ASK}_PENDING`
+export const CREATE_ASK_FULFILLED = `${CREATE_ASK}_FULFILLED`
+export const CREATE_ASK_REJECTED = `${CREATE_ASK}_REJECTED`

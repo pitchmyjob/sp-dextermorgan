@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-import { Platform } from 'react-native';
-
+import { Platform, Text } from 'react-native';
+import { DefaultRenderer } from 'react-native-router-flux';
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from "react-native-fcm";
 
-import firebaseClient from  "./FirebaseClient";
+import { api }  from './utils/request'
 
 export default class PushController extends Component {
   constructor(props) {
@@ -14,23 +14,26 @@ export default class PushController extends Component {
   componentDidMount() {
     FCM.requestPermissions();
 
-    FCM.getFCMToken().then(token => {
-      console.log("TOKEN (getFCMToken)", token);
-      this.props.onChangeToken(token);
+    FCM.getFCMToken().then(fcm => {
+        // console.log("TOKEN (getFCMToken)", fcm);
+        api.patch('/auth/fcm/', {fcm}).catch(error => console.log(error))
     });
 
+
+    // api.patch('/auth/fcm/', {fcm}
+
     FCM.getInitialNotification().then(notif => {
-      console.log("INITIAL NOTIFICATION", notif)
+        console.log("INITIAL NOTIFICATION", notif)
     });
 
     this.notificationListner = FCM.on(FCMEvent.Notification, notif => {
       console.log("Notification", notif);
       if(notif.local_notification){
         return;
-      }
+      } 
       if(notif.opened_from_tray){
         return;
-      }
+      } 
 
       if(Platform.OS ==='ios'){
               //optional
@@ -53,8 +56,8 @@ export default class PushController extends Component {
     });
 
     this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, token => {
-      console.log("TOKEN (refreshUnsubscribe)", token);
-      this.props.onChangeToken(token);
+      // console.log("TOKEN (refreshUnsubscribe)", token);
+      api.patch('/auth/fcm/', {fcm}).catch(error => console.log(error))
     });
   }
 
@@ -65,7 +68,8 @@ export default class PushController extends Component {
       priority: "high",
       click_action: notif.click_action,
       show_in_foreground: true,
-      local: true
+      local: true,
+      lights: true
     });
   }
 
@@ -76,6 +80,17 @@ export default class PushController extends Component {
 
 
   render() {
-    return null;
+
+    const children = this.props.navigationState.children;
+    const state = children[0];
+
+    return (
+      <DefaultRenderer
+          navigationState={state}
+          key={state.key}
+          {...state}
+          onNavigate={this.props.onNavigate}
+        />
+    );
   }
 }

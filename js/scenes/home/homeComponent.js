@@ -9,7 +9,7 @@ class Home extends Component {
 
   constructor(props) { 
     super(props);
-
+ 
     this.state={
       home:false,
       fadeAnim: new Animated.Value(0),
@@ -24,7 +24,7 @@ class Home extends Component {
 
     setTimeout(() => {
       verifyAccessToken()
-    }, 1000)
+    }, 500) // 1000
   }
 
   componentWillReceiveProps(nextProps) {
@@ -65,7 +65,7 @@ class Home extends Component {
 
     return (
       <Container style={styles.container}>
-
+        
         <Image source={require('../../../images/home-bg.png')} style={styles.bgcontainer} >
           
           <Animated.View style={[styles.topcontainer, this.state.top]}>

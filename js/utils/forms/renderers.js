@@ -6,10 +6,16 @@ import styles from '../../themes/styles'
 export const renderInput = (field) => {
     const { input, meta, ...props } = field;
     const { onChange, ...restProps } = input;
- 
+    var nofloating = false;
+    if(field.nofloating)
+        nofloating = true
+
     return (
             <View>
-                <Item floatingLabel style={field.meta.touched && field.meta.error && styles.inputGroupError || styles.inputGroup} >
+                <Item  
+                    style={field.meta.touched && field.meta.error && styles.inputGroupError || styles.inputGroup} 
+                    stackedLabel={nofloating} floatingLabel={!nofloating} >
+
                     <Label>{field.placeholder}</Label>
                     <Input  
                         {...restProps} 
@@ -22,3 +28,19 @@ export const renderInput = (field) => {
             
     );
 };
+
+
+export const renderInputAsk = (field) => {
+    const { input, meta, ...props } = field;
+    const { onChange, ...restProps } = input;
+
+    return (
+        <Input
+          {...restProps}
+          placeholder={field.placeholder}
+          multiline
+          autoFocus={true}
+          onChange={onChange} 
+        />
+    )
+}

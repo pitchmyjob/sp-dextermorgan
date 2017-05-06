@@ -28,6 +28,15 @@ export class Api {
 
 	}
 
+	patch(url, payload = {} ){
+		return appAuthToken.getSessionToken()
+			.then((token) => {
+		        if(token)
+		        	this.instance.defaults.headers.common['Authorization'] = "JWT "+token;
+		        return this.instance.patch(url, payload)
+		     })
+	}
+
 	post(url, payload = {} ){
 		return appAuthToken.getSessionToken()
 			.then((token) => {
@@ -40,10 +49,23 @@ export class Api {
 	get(url){
 		return appAuthToken.getSessionToken()
 			.then((token) => {
-		        if(token)
-		        	this.instance.defaults.headers.common['Authorization'] = "JWT "+token;
+				headers={
+					'Accept': 'application/json',
+    				'Content-Type': 'application/json'
+				}
+		        if(token){
+		        	// this.instance.defaults.headers.common['Authorization'] = "JWT "+token;
+		        	headers['Authorization']= "JWT "+token
+		        }
 
-		        return this.instance.get(url)
+		        return axios.get(API_ROOT_URL+url, {
+			      headers: { ...headers }
+			    })
+
+		     //    return this.instance.get(url, {
+			    //   headers: { "Authorization": "JWT "+token }
+			    // })
+
 		     })
 	}
 }

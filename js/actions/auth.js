@@ -4,7 +4,7 @@ import { Actions, ActionConst } from 'react-native-router-flux'
 import jwtDecode from 'jwt-decode';
 
 import { AUTH_REQUESTED, AUTH_SIGNUP_USER, AUTH_USER_NOT_EXISTS, AUTH, AUTH_LOGOUT} from '../constants/auth'
-import { USER_FROM_TOKEN } from '../constants/users'
+import { userFromToken } from './users'
 
 import { api }  from '../utils/request'
 
@@ -38,12 +38,13 @@ export const authSignupUser = (values, rs) => {
     }
 }
 
-export const userFromToken = (token) => {
-  return {
-      type: USER_FROM_TOKEN,
-      payload: jwtDecode(token)
-  }
+export const saveTokenAndUserFromToken = (token) =>{
+    return function(dispatch) {
+      appAuthToken.storeSessionToken(token) 
+      dispatch(userFromToken(token))
+    }
 }
+
 
 export const verifAuthFacebook = (values) => {
   return function(dispatch) {
@@ -67,7 +68,7 @@ export const verifyAccessToken = () => {
           dispatch({type:AUTH_REQUESTED})
         } else {
           dispatch(userFromToken(accessToken))
-          Actions.tabbar({type: "reset"}) 
+          Actions.tabbar({type: "reset"}) // remettre to tabbar
         }
       })
   }

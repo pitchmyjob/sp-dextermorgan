@@ -5,6 +5,7 @@ import routes from './routes';
 import auth from './auth';
 import user from './user';
 import relation from './relation';
+import ask from './ask';
 
 
 const appReducer = combineReducers({
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
 	auth,
 	user,
 	relation,
+	ask,
 	form
 })
 

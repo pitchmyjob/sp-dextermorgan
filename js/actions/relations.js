@@ -1,14 +1,37 @@
-import { LIST_FACEBOOK_FRIEND, FOLLOW_USER, FOLLOW_ALL_USER, CREATE_FACEBOOK_FRIEND } from '../constants/relations'
+import { LIST_FACEBOOK_FRIEND, FOLLOW_USER, FOLLOW_ALL_USER, CREATE_FACEBOOK_FRIEND, LIST_FOLLOW_FOLLOWER } from '../constants/relations'
 import { api }  from '../utils/request'
 import { Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import { userFromToken } from './auth'
+import { userFromToken } from './users'
 import { appAuthToken } from '../utils/storage'
+
+
+
+export const listFollow = (id, search='') => {
+  if(search){
+    search = "?search="+search
+  }
+  return {
+      type: LIST_FOLLOW_FOLLOWER,
+      payload: api.get('relation/'+id+'/follows/'+search)
+  }
+}
+
+export const listFollower = (id, search='') => {
+  if(search){
+    search = "?search="+search
+  }
+  return {
+      type: LIST_FOLLOW_FOLLOWER,
+      payload: api.get('relation/'+id+'/followers/'+search)
+  }
+}
+
 
 export const listFacebookFriend = () => {
   return {
       type: LIST_FACEBOOK_FRIEND,
-      payload: api.get('/relation/facebook-list/')
+      payload: api.get('relation/facebook-list/')
   }
 }
 
