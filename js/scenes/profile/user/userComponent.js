@@ -17,7 +17,7 @@ class User extends Component {
 	                source={{uri:profile.photo+".115x115"}} circular style={{width:60, height:60}}/>
 	                
 	              <Body style={{"alignItems":"flex-start", paddingLeft:20}}>
-	                  <Text style={{color:"black", fontSize:16, fontWeight:'500'}}>{profile.username}</Text>
+	                  <Text style={{color:"black", fontSize:16, fontWeight:'500'}}>{profile.first_name} {profile.last_name}</Text>
 	                  <Text note>{profile.title && profile.title || "Ajoutez une description"}</Text>
 	              </Body>
 	        </Item>

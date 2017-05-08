@@ -59,7 +59,7 @@ class EditProfile extends Component {
                   { this.state.image &&
                     <Spinner small/>
                     ||
-                    <Thumbnail source={{uri:user.profile.photo}} circular style={{width:100, height:100}} />
+                    <Thumbnail source={{uri:user.profile.photo}} circular style={{width:100, height:100, borderRadius:50}} />
                   }
 
                 </TouchableOpacity>

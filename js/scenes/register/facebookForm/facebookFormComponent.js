@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field } from 'redux-form'
 
-import { Image, View, TouchableOpacity, Animated} from 'react-native';
+import { Image, View, TouchableOpacity, Animated, KeyboardAvoidingView} from 'react-native';
 import { Container, Text, Button, Footer, InputGroup, Input, Icon, Spinner} from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { LoginButton, AccessToken, LoginManager , GraphRequest,
@@ -80,7 +80,7 @@ class FacebookForm extends Component {
         {this.state.form && 
           <View style={[styles.container, styles.padcontainer]}>
 
-            <View style={{alignItems: 'center'}}>
+            <KeyboardAvoidingView style={{alignItems: 'center'}}>
                 <Image source={require('../../../../images/effect.png')} style={styles.bguser}>
                     <View style={{alignItems: 'center'}}>
                         <Image source={{uri:this.state.photo}} style={styles.imguser} />
@@ -101,7 +101,7 @@ class FacebookForm extends Component {
                       />
               </View>
                 
-            </View>
+            </KeyboardAvoidingView>
 
               
               <View style={styles.footer}>

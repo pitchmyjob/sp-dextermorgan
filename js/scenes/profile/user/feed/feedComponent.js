@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Text, Tabs, Tab, Card, CardItem, Left, Thumbnail, Body, Right, Icon} from 'native-base';
 
+import { parseDate } from '../../../../utils/date'
 import styles from '../../styles'
+
 
 const styleHeading = {
   textStyle:{color:"black"},
@@ -28,7 +30,7 @@ class Feed extends Component {
                             <Thumbnail source={{uri:user.photo+".30x30"}} small circular/>
                             <Body>
                                 <Text style={{fontWeight:'500', fontSize:15}}>{user.username}</Text>
-                                <Text note small>3 min</Text>
+                                <Text note small>{parseDate(ask.created)}</Text>
                             </Body>
                         </Left>
                           <Right>

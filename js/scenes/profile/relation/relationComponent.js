@@ -53,7 +53,7 @@ class Relation extends Component {
                         </Left>
                         
                         <Body style={{paddingBottom:10}}>
-                            <TouchableOpacity onPress={() => Actions.profile_user({id:friend.id, title:friend.first_name})}>
+                            <TouchableOpacity onPress={() => Actions.profile_user({id:friend.id, title:friend.username})}>
                                 <Text>{friend.first_name} {friend.last_name}</Text>
                                 <Text note>@{friend.username}</Text>
                             </TouchableOpacity>

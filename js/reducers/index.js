@@ -6,6 +6,8 @@ import auth from './auth';
 import user from './user';
 import relation from './relation';
 import ask from './ask';
+import search from './search';
+import notification from './notification';
 
 
 const appReducer = combineReducers({
@@ -14,6 +16,8 @@ const appReducer = combineReducers({
 	user,
 	relation,
 	ask,
+	search,
+	notification,
 	form
 })
 

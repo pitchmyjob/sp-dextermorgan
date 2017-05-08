@@ -18,8 +18,11 @@ import FacebookForm from './scenes/register/facebookForm/facebookFormContainer'
 import RegisterForm from './scenes/register/registerForm/registerFormContainer'
 import RegisterPhoto from './scenes/register/registerForm/stepFive/stepFiveContainer'
 
+import Notification from './scenes/notification/notificationContainer'
 import Friend from './scenes/friend/friendContainer'
 import ListFriend from './scenes/friend/listFriend/listFriendContainer'
+import Search from './scenes/search/searchContainer'
+import Spitch from './scenes/spitch/spitchContainer'
 import Feed from './scenes/feed/feedContainer'
 import Profile from './scenes/profile/profileContainer'
 import EditProfile from './scenes/profile/edit/editContainer'
@@ -31,7 +34,7 @@ import Ask from './scenes/ask/askContainer'
 const ConnectedRouter = connect()(Router);
 
 const heightNavBar = Platform.select({ios: {paddingTop: 64}, android: {paddingTop: 54}, })
-const heightTabBar = Platform.select({ios: {marginBottom: 50}, android: {marginBottom: 54}, })
+const heightTabBar = Platform.select({ios: {marginBottom: 50}, android: {marginBottom: 50}, })
 
 
 class TabIcon extends React.Component {
@@ -59,7 +62,7 @@ const tab = ({ selected, title, iconName }) => {
       )
   }else{
     return (
-      <Image source={require('../images/spitch.png')} style={{"marginBottom":15}}/>
+      <Image source={require('../images/spitch.png')} style={{paddingTop:2, paddingBottom:2}}/>
     )
   }  
 }
@@ -125,14 +128,18 @@ const Scenes = Actions.create(
               <Scene 
                 key="feed" title="Spitch"
                 component={Feed} 
-                sceneStyle={heightNavBar} navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}} titleStyle={{fontSize: 18, fontWeight:'500'}}
+                sceneStyle={[heightNavBar, heightTabBar]} navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}} titleStyle={{fontSize: 18, fontWeight:'500'}}
                 icon={tab} iconName="ios-albums-outline" />
 
-              <Scene key="tab2" component={Feed} title="search" icon={tab} iconName="ios-search-outline" hideNavBar />
-              <Scene key="tab3" title="spitch" component={Feed} icon={tab} hideNavBar />
-              <Scene key="tab4" component={Feed} title="truc" icon={tab} iconName="ios-square-outline" hideNavBar />
+              <Scene key="search" component={Search} title="search" icon={tab} iconName="ios-search-outline" hideNavBar />
+              <Scene key="spitch" initial title="spitch" component={Spitch} icon={tab} hideNavBar />
 
-              <Scene key="profile" icon={tab} iconName="md-person"  initial >
+              <Scene 
+                key="tab4" component={Notification} 
+                title="Notification" icon={tab} iconName="ios-square-outline" 
+                sceneStyle={heightNavBar} navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}}   />
+
+              <Scene key="profile" icon={tab} iconName="md-person"   >
                 <Scene 
                   key="profile_user" title="Mon profil" 
                   component={Profile} 

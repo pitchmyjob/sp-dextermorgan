@@ -9,7 +9,6 @@ export default {
     flex: 1,
     width: null,
     height: null,
-    paddingBottom:250
   },
   imguser:{
     width:30,
@@ -24,7 +23,7 @@ export default {
     paddingRight:15
   },
   footer:{
-    paddingTop:25,
+    paddingTop:10,
     flex:1.5,
     borderTopWidth:1,
     borderColor:"#ECEFF1"
@@ -35,7 +34,7 @@ export default {
     color:"#000000"
   },
   btn:{
-    marginTop:22
+    marginTop:10
   },
   empty:{
     paddingTop:10

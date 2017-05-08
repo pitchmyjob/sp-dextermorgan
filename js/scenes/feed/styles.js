@@ -7,7 +7,6 @@ export default {
     flex: 1,
     backgroundColor: '#f7f7f7',
     width: null,
-    height: null,
   },
   card:{
     paddingLeft:0,
