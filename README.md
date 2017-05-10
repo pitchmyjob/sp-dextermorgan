@@ -209,4 +209,9 @@ Add in AndroidManifest.xml "android:launchMode="singleTask" and :
 </intent-filter>
 ```
 
+### fetch
+
+https://github.com/wkh237/react-native-fetch-blob
+(add permissions)
+
 

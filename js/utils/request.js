@@ -3,7 +3,7 @@ import {AsyncStorage} from 'React'
 
 import { appAuthToken } from './storage'
 
-const API_ROOT_URL = 'http://163.172.28.221:8000/api/'
+export const API_ROOT_URL = 'http://163.172.28.221:8000/api/'
 
 
 const HEADERS = {

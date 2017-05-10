@@ -16,7 +16,8 @@ export default class PushController extends Component {
 
     FCM.getFCMToken().then(fcm => {
         // console.log("TOKEN (getFCMToken)", fcm);
-        api.patch('/auth/fcm/', {fcm}).catch(error => console.log(error))
+        if(fcm)
+          api.patch('/auth/fcm/', {fcm}).catch(error => console.log(error))
     });
 
 

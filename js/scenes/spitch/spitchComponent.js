@@ -61,9 +61,9 @@ class Spitch extends Component {
                             <Text style={{fontWeight:'300'}}> {ask.text} </Text>
                       </CardItem>
 
-                        <CardItem >
+                        <CardItem > 
                             <Body>
-                              <Button bordered outline block onPress={() => Actions.recorder()}>
+                              <Button bordered outline block onPress={() => Actions.recorder({id:ask.id})}>
                                     <Text>Spitcher</Text>
                               </Button>
                             </Body>

@@ -27,6 +27,9 @@ export default {
   	width:60, 
   	height:60,
   },
+  nobtnsend:{
+    backgroundColor: 'rgba(0,0,0,0)'
+  },
   btnsend:{
   	position: 'absolute',
   	bottom:20,
