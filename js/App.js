@@ -29,6 +29,7 @@ import EditProfile from './scenes/profile/edit/editContainer'
 import Relation from './scenes/profile/relation/relationContainer'
 import Settings from './scenes/settings/settingsContainer'
 
+import Recorder from './scenes/recorder/recorderContainer'
 import Ask from './scenes/ask/askContainer'
 
 const ConnectedRouter = connect()(Router);
@@ -171,6 +172,9 @@ const Scenes = Actions.create(
                 renderBackButton={()=>(null)}
                 rightButtonImage={require('../images/close.png')} onRight={() => Actions.pop()}
                 navigationBarStyle={{backgroundColor:'transparent', 'borderBottomColor':'#cccccc'}}  />
+
+        <Scene key="recorder" showNavigationBar={false}  
+              component={Recorder} hideNavBar />
 
     </Scene>
 );

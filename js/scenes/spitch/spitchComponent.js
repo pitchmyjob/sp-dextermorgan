@@ -63,7 +63,7 @@ class Spitch extends Component {
 
                         <CardItem >
                             <Body>
-                              <Button bordered outline block >
+                              <Button bordered outline block onPress={() => Actions.recorder()}>
                                     <Text>Spitcher</Text>
                               </Button>
                             </Body>
