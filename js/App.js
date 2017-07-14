@@ -2,56 +2,68 @@
 import { Actions, ActionConst, Router, Scene } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { Platform, Text, Image } from 'react-native';
-
 import { StyleProvider, Icon, View } from 'native-base';
 import getTheme from '../native-base-theme/components';
 import variables from '../native-base-theme/variables/commonColor';
-import {reset} from 'redux-form'
+
 import configureStore from './configureStore';
 
 import PushController from './pushController'
 
-import Home from './scenes/home/homeContainer'
-import Login from './scenes/login/loginContainer'
-import Register from './scenes/register/registerContainer'
-import FacebookForm from './scenes/register/facebookForm/facebookFormContainer'
-import RegisterForm from './scenes/register/registerForm/registerFormContainer'
-import RegisterPhoto from './scenes/register/registerForm/stepFive/stepFiveContainer'
+import Home from './auth/containers/HomeContainer'
+import FacebookForm from './auth/containers/FacebookFormContainer'
 
-import Notification from './scenes/notification/notificationContainer'
-import Friend from './scenes/friend/friendContainer'
-import ListFriend from './scenes/friend/listFriend/listFriendContainer'
-import Search from './scenes/search/searchContainer'
-import Spitch from './scenes/spitch/spitchContainer'
-import Feed from './scenes/feed/feedContainer'
-import Profile from './scenes/profile/profileContainer'
-import EditProfile from './scenes/profile/edit/editContainer'
-import Relation from './scenes/profile/relation/relationContainer'
-import Settings from './scenes/settings/settingsContainer'
+import Contact from './relation/containers/ContactContainer'
+import ListFacebook from './relation/containers/ListFacebookContainer'
+import ListRelation from './relation/containers/ListRelationContainer'
 
-import Recorder from './scenes/recorder/recorderContainer'
-import Ask from './scenes/ask/askContainer'
+import UserProfile from './user/containers/UserProfileContainer'
+import UserUpdate from './user/containers/UserUpdateContainer'
+import UserSettings from './user/containers/UserSettingsContainer'
+
+import VisitProfile from './visit/containers/VisitProfileContainer'
+
+import SwipeAsk from './ask/containers/SwipeAskContainer'
+import CreateAsk from './ask/containers/CreateAskContainer'
+
+import Recorder from './spitch/containers/RecorderContainer'
+import Replay from './spitch/containers/ReplayContainer'
+import Share from './spitch/containers/ShareContainer'
+import Video from './spitch/containers/VideoContainer'
+
+import ListFeed from './feed/containers/ListFeedContainer'
+
 
 const ConnectedRouter = connect()(Router);
 
 const heightNavBar = Platform.select({ios: {paddingTop: 64}, android: {paddingTop: 54}, })
 const heightTabBar = Platform.select({ios: {marginBottom: 50}, android: {marginBottom: 50}, })
 
+const sceneNavTransparent ={
+    navigationBarStyle: {backgroundColor:'transparent', 'borderBottomColor':'transparent'},
+    leftButtonIconStyle: {'tintColor':'#4A4A4A'}
+}
+const sceneStyle = {
+  sceneStyle: heightNavBar,
+  navigationBarStyle: {backgroundColor:'white'},
+  leftButtonIconStyle: {'tintColor':'#4A4A4A'}
+}
+const sceneStyleNoBorder = {
+  ...sceneStyle,
+  navigationBarStyle: {backgroundColor:'white', 'borderBottomColor':'white'}
+}
+const sceneStyleTabbar = {
+  ...sceneStyle,
+  sceneStyle: [heightNavBar, heightTabBar],
+  navigationBarStyle: {backgroundColor:'white', 'borderBottomColor':'white'}
+}
 
-class TabIcon extends React.Component {
 
-    constructor(props) {
-      super(props);
-    
-      this.state = {};
-
-      console.log(this.props.iconName)
-    }
-
+class CloseButton extends React.Component {
     render(){
-        return (
-            <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
-        );
+      return (
+          <Icon name="ios-close-outline" onPress={this.props.onPress} style={{...this.props.styles, fontSize:34, marginRight:10, backgroundColor:'transparent'}}/>
+      );
     }
 }
 
@@ -63,121 +75,59 @@ const tab = ({ selected, title, iconName }) => {
       )
   }else{
     return (
-      <Image source={require('../images/spitch.png')} style={{paddingTop:2, paddingBottom:2}}/>
+        <Image source={require('../assets/images/tabbarspitch.png')} style={{ width:50, height:50}}/>
     )
   }  
-}
-
-
-class BackButton extends React.Component {
-    render(){
-        return (
-            <Icon name="arrow-back" onPress={() => Actions.pop() }/>
-        );
-    }
-}
-
-class SettingsButton extends React.Component {
-    render(){
-        const { id } = this.props.state
-        if(!id)
-        {
-            return (
-                <Icon name="ios-settings-outline" style={{paddingRight:10, color:'#595959'}} onPress={() => Actions.settings() }/>
-            );
-        }
-        return null
-    }
 }
 
 const Scenes = Actions.create(
     <Scene key='root' >
 
         <Scene key="home" initial component={Home} hideNavBar  />
-
-        <Scene key="login" 
-          component={Login} title="SE CONNECTER"
-          hideNavBar={false} 
-          sceneStyle={heightNavBar} navigationBarStyle={{backgroundColor:'white'}} />   
-
-        <Scene key="register"  sceneStyle={heightNavBar} component={Register} hideNavBar={false} title="S'INSCRIRE" navigationBarStyle={{backgroundColor:'white'}}  />  
-        <Scene key="facebookForm" sceneStyle={heightNavBar} component={FacebookForm} hideNavBar={false} title="S'INSCRIRE" navigationBarStyle={{backgroundColor:'white'}}  />  
-        
-        <Scene key="registerForm" 
-          component={RegisterForm}
-          // renderBackButton={() => <BackButton />}
-          hideNavBar={false} 
-          navigationBarStyle={{backgroundColor:'transparent', 'borderBottomColor':'white'}} 
-          leftButtonIconStyle = {{ tintColor:'#4A4A4A'}}  />
-
-        <Scene key="registerPhoto"  
-          component={RegisterPhoto}
-          rightTitle="Passer" onRight={() => Actions.friend()} rightButtonTextStyle={{'color':'#BABCBE'}}
-          leftButtonIconStyle = {{ tintColor:'#4A4A4A'}}
-          navigationBarStyle={{backgroundColor:'transparent', 'borderBottomColor':'white'}} />   
-
-        <Scene key="friend" 
-          component={Friend}
-          rightTitle="Passer" onRight={() => Actions.tabbar()} rightButtonTextStyle={{'color':'#BABCBE'}}
-          sceneStyle={heightNavBar}  navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}}  />   
-
-        <Scene key="listFriend" sceneStyle={heightNavBar} rightButtonImage={require('../images/close.png')} onRight={() => Actions.tabbar()} component={ListFriend} hideNavBar={false} title="Amis de facebook" navigationBarStyle={{backgroundColor:'white'}}  />   
+        <Scene {...sceneStyle} key="facebookForm"  component={FacebookForm} title="S'INSCRIRE"   />  
+        <Scene {...sceneStyleNoBorder} key="contact" component={Contact} rightButtonTextStyle={{'color':'#BABCBE'}} />   
+        <Scene {...sceneStyle} key="listFacebook"  component={ListFacebook}  title="Amis de facebook"  />
 
         <Scene key="tabbar" component={PushController} >
-          <Scene key="tabbar2" tabs={true} style={{borderTopWidth:1, borderTopColor: '#cccccc', backgroundColor:'white'}} >
+            <Scene key="tabbar2" tabs={true} style={{borderTopWidth:1, borderTopColor: '#cccccc', backgroundColor:'white'}} >
 
-              <Scene 
-                key="feed" title="Spitch"
-                component={Feed} 
-                sceneStyle={[heightNavBar, heightTabBar]} navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}} titleStyle={{fontSize: 18, fontWeight:'500'}}
-                icon={tab} iconName="ios-albums-outline" />
 
-              <Scene key="search" component={Search} title="search" icon={tab} iconName="ios-search-outline" hideNavBar />
-              <Scene key="spitch" initial title="spitch" component={Spitch} icon={tab} hideNavBar />
+                <Scene {...sceneStyleTabbar} key="feed" title="Spitch" icon={tab} iconName="ios-albums-outline" component={ListFeed} titleStyle={{fontSize: 20, fontWeight:'500'}}/>
 
-              <Scene 
-                key="tab4" component={Notification} 
-                title="Notification" icon={tab} iconName="ios-square-outline" 
-                sceneStyle={heightNavBar} navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}}   />
+                <Scene key="spitch" title="" component={() => null} icon={tab}  hideTabBar 
+                  onSelect={() => Actions.swipeask()}  />
 
-              <Scene key="profile" icon={tab} iconName="md-person"   >
-                <Scene 
-                  key="profile_user" title="Mon profil" 
-                  component={Profile} 
-                  renderRightButton={(state) => <SettingsButton state={state} />} 
-                  sceneStyle={heightNavBar}  navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}} titleStyle={{fontSize: 18, fontWeight:'500'}} />
+                <Scene key="user" icon={tab} iconName="md-person" hideNavBar component={UserProfile} />
 
-                <Scene 
-                  key="profile_relation" 
-                  component={Relation} 
-                  sceneStyle={heightNavBar}  navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}} titleStyle={{fontSize: 18, fontWeight:'500'}} />
-
-              </Scene>
-
-          </Scene>
+                
+            </Scene>
         </Scene>
 
-        <Scene 
-          key="editProfile" title="Modifier mon profil"
-          component={EditProfile} 
-          sceneStyle={heightNavBar}  hideNavBar={false}  navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}}  /> 
+        <Scene {...sceneStyleNoBorder} key="userupdate" title="Modifier mon profil" component={UserUpdate}   /> 
+        <Scene {...sceneStyleNoBorder} key="settings" title="Parametre du compte" component={UserSettings} /> 
+        <Scene {...sceneStyleNoBorder} key="relation" component={ListRelation} title="Abonné" titleStyle={{fontSize: 18, fontWeight:'500'}} /> 
 
-        <Scene 
-          key="settings" title="Parametre du compte"
-          component={Settings} 
-          sceneStyle={heightNavBar} navigationBarStyle={{backgroundColor:'white', 'borderBottomColor':'white'}}  />   
+        <Scene {...sceneNavTransparent} key="visit" component={VisitProfile} leftButtonIconStyle={{'tintColor':'white'}} hideNavBar={false}/> 
 
-        <Scene key="ask" title="Posez votre question" direction="vertical"
-                component={Ask} icon={tab} sceneStyle={[heightNavBar]} 
-                renderBackButton={()=>(null)}
-                rightButtonImage={require('../images/close.png')} onRight={() => Actions.pop()}
-                navigationBarStyle={{backgroundColor:'transparent', 'borderBottomColor':'#cccccc'}}  />
+        <Scene {...sceneNavTransparent} key="swipeask" component={SwipeAsk}  direction="vertical" renderBackButton={()=>(null)} 
+              renderRightButton={() => <CloseButton styles={{color:'white'}} onPress={() => Actions.pop()} />} />
 
-        <Scene key="recorder" showNavigationBar={false}  
-              component={Recorder} hideNavBar />
+        <Scene key="recorder" showNavigationBar={false}  animation="fade" component={Recorder} hideNavBar />
+        <Scene key="replay" showNavigationBar={false}  component={Replay} hideNavBar />
+        <Scene key="video" showNavigationBar={false} component={Video} hideNavBar animation="fade" />
+
+        <Scene {...sceneStyle} key="share" title="Partager" direction="vertical" component={Share} renderBackButton={()=>(null)} 
+              renderRightButton={() => <CloseButton styles={{color:'#4A4A4A'}} onPress={() => Actions.tabbar({type:ActionConst.RESET})} />}/>
+
+        <Scene {...sceneStyleNoBorder} key="ask" title="Posez votre question" direction="vertical" component={CreateAsk} icon={tab} renderBackButton={()=>(null)}
+                renderRightButton={() => <CloseButton styles={{color:'#4A4A4A'}} onPress={() => Actions.pop()} />}/>
+
 
     </Scene>
 );
+
+// <Scene {...sceneStyle} key="listFacebook" hideBackImage component={ListFacebook}  title="Amis de facebook" 
+          // renderRightButton={() => <CloseButton onPress={() => Actions.tabbar({type: ActionConst.REPLACE}) }/>} />
 
 class App extends Component {
 

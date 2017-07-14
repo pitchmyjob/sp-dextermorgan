@@ -1,4 +1,4 @@
-import { UserNotExists } from '../../actions/auth'
+import { UserNotExists } from '../../auth/AuthActions'
 import { SubmissionError } from 'redux-form';
 
 

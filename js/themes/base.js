@@ -11,7 +11,7 @@ export class ButtonGradient extends Component {
       return (
           <TouchableOpacity style={styles.buttonGradient} onPress={onPress} >
             <Image 
-                source={require('../../images/btn.png')}
+                source={require('../../assets/images/btn.png')}
                 style={styles.imageButtonGradient}>
                 
                 <Text style={styles.textButtonGradient}>
@@ -31,7 +31,7 @@ export class ButtonTransparent extends Component {
       return (
           <TouchableOpacity onPress={onPress} >
               <Image 
-                    source={require('../../images/btn.png')}
+                    source={require('../../assets/images/btn.png')}
                     style={styles.imageButtonGradient}>
 
                     <View style={styles.viewButtonTransparent}>
@@ -55,7 +55,7 @@ export class ButtonLoaderGradient extends Component {
 
       return (
               <Image 
-                source={require('../../images/btn.png')}
+                source={require('../../assets/images/btn.png')}
                 style={styles.imageButtonGradient}>
                 <Spinner color='white' small />
               </Image>
@@ -75,6 +75,48 @@ export class ButtonFacebook extends Component {
              <Icon name='logo-facebook' />
              <Text style={styles.textFacebook}>{this.props.text}</Text>
           </Button>
+      )
+  }
+}
+
+
+export class FullLoader extends Component {
+
+  render() {
+
+      return (
+              <View style={styles.loader}>
+                <View style={styles.blocloader}>
+                  <Spinner color='white'/>
+                </View>
+              </View>
+      )
+  }
+}
+
+
+export class ButtonSpitch extends Component {
+
+  render() {
+      const { onPress } = this.props;
+      return (
+          <TouchableOpacity onPress={onPress} >
+              <Image source={require('../../assets/images/btn-spitch.png')} style={{width:140, height:45}}/>
+          </TouchableOpacity>
+          
+      )
+  }
+}
+
+
+export class CenterLoader extends Component {
+
+  render() {
+
+      return (
+              <View style={styles.centerloader}>
+                  <Spinner color='#ccc'/>
+              </View>
       )
   }
 }

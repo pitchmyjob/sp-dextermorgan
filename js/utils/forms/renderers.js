@@ -36,10 +36,11 @@ export const renderInputAsk = (field) => {
 
     return (
         <Input
-          style={{minHeight:60}}
           {...restProps}
           placeholder={field.placeholder}
           multiline
+          maxLength={140}
+          style={{height:70}}
           autoFocus={true}
           onChange={onChange} 
         />

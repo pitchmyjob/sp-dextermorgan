@@ -1,18 +1,14 @@
 import { AsyncStorage } from 'react-native';
-import devTools from 'remote-redux-devtools';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { persistStore } from 'redux-persist';
 import promise from 'redux-promise-middleware'
 
-import reducer from './reducers';
+import reducer from './reducer';
 
 export default function configureStore(onCompletion:()=>void):any {
   const enhancer = compose(
-    applyMiddleware(promise(), thunk),
-    devTools({
-      name: 'spitch', realtime: true,
-    }),
+    applyMiddleware(promise(), thunk)
   );
 
   const store = createStore(reducer, enhancer);

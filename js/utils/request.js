@@ -3,7 +3,8 @@ import {AsyncStorage} from 'React'
 
 import { appAuthToken } from './storage'
 
-export const API_ROOT_URL = 'http://163.172.28.221:8000/api/'
+// export const API_ROOT_URL = 'http://163.172.28.221:8000/api/'
+export const API_ROOT_URL = 'https://dev.spitch.tv/api/'
 
 
 const HEADERS = {
@@ -32,7 +33,7 @@ export class Api {
 		return appAuthToken.getSessionToken()
 			.then((token) => {
 		        if(token)
-		        	this.instance.defaults.headers.common['Authorization'] = "JWT "+token;
+		        	this.instance.defaults.headers.common['Authorization'] = "Token "+token;
 		        return this.instance.patch(url, payload)
 		     })
 	}
@@ -41,7 +42,7 @@ export class Api {
 		return appAuthToken.getSessionToken()
 			.then((token) => {
 		        if(token)
-		        	this.instance.defaults.headers.common['Authorization'] = "JWT "+token;
+		        	this.instance.defaults.headers.common['Authorization'] = "Token "+token;
 		        return this.instance.post(url, payload)
 		     })
 	}
@@ -55,7 +56,7 @@ export class Api {
 				}
 		        if(token){
 		        	// this.instance.defaults.headers.common['Authorization'] = "JWT "+token;
-		        	headers['Authorization']= "JWT "+token
+		        	headers['Authorization']= "Token "+token
 		        }
 
 		        return axios.get(API_ROOT_URL+url, {

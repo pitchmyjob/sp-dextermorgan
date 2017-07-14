@@ -1,0 +1,68 @@
+import React, { Component } from 'react';
+import { Image, View, TouchableOpacity, ListView, TouchableWithoutFeedback } from 'react-native';
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Item, Input, Spinner } from 'native-base';
+import { Actions } from 'react-native-router-flux';
+
+import { parseDate } from '../../utils/date'
+import styles from '../styles/feed'
+import Like from '../../spitch/containers/LikeContainer'
+
+
+
+class SpitchFeed extends Component {
+
+  render() {
+    const { item } = this.props
+    const obj = item.content_object
+
+    return (
+        <Card style={styles.card} >
+               <CardItem>
+                <Left>
+                    <Thumbnail source={{uri:obj.user.photo+".115x115"}} small circular/>
+                    <Body>
+                        <View style={{flex:1, flexDirection:'row'}}>
+                        	<Text style={{fontSize:15, fontWeight:"700"}} onPress={() => Actions.visit({id:obj.user.id})}>{obj.user.username}</Text> 
+                        	<Text style={{fontSize:15}}> a repondu à </Text>
+                        	<Text style={{fontSize:15, fontWeight:"700"}} onPress={() => Actions.visit({id:obj.ask.user.id})}>{obj.ask.user.username}</Text>
+                        </View>
+                        <Text style={{fontSize:12}} note small>{parseDate(obj.created)}</Text>
+                    </Body>
+                </Left>
+                  <Right style={{flex:0.1}}>
+                    <Icon name="ios-more" />
+                 </Right>
+              </CardItem>
+              <CardItem cardBody>
+                  <TouchableOpacity onPress={() => Actions.video({item:obj})}>
+                      <Image
+                        source={{uri:obj.thumb}}
+                        style={styles.thumbImage}
+                      >
+                        <Text style={styles.txtImage}>
+                            {obj.ask.text}
+                        </Text>
+                      </Image>
+                  </TouchableOpacity>
+              </CardItem>
+
+              <CardItem style={{flex: 1, flexDirection: 'row', paddingLeft:0, paddingRight:0, paddingBottom:15}}>
+
+              <Like id={obj.id} likes={obj.likes} is_liked={obj.is_liked}/>
+	
+	            <TouchableOpacity style={{flex:3, alignItems: 'center'}} onPress={() => Actions.recorder({id:obj.ask.id, text:obj.ask.text}) }>
+	                <Image source={require('../../../assets/images/btn-spitch.png')} style={{width:140, height:45}}/>
+	            </TouchableOpacity>
+	            <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+	                
+	            </View>
+	        </CardItem>
+
+       </Card>
+    )
+  }
+}
+
+
+
+export default SpitchFeed

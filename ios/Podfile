@@ -10,6 +10,8 @@ target 'spitchtv' do
   pod 'Firebase/Messaging'
   pod 'RSKImageCropper'
   pod 'QBImagePickerController'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
   target 'spitchtvTests' do
     inherit! :search_paths

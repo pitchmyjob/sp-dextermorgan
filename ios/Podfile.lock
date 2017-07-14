@@ -1,4 +1,7 @@
 PODS:
+  - Crashlytics (3.8.4):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.11)
   - Firebase/Core (3.15.0):
     - FirebaseAnalytics (= 3.7.0)
     - FirebaseCore (= 3.5.2)
@@ -27,11 +30,15 @@ PODS:
   - RSKImageCropper (1.6.1)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - Firebase/Messaging
   - QBImagePickerController
   - RSKImageCropper
 
 SPEC CHECKSUMS:
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseCore: a024587e43778508700af8c6b1209f7c4516ba02
@@ -42,6 +49,6 @@ SPEC CHECKSUMS:
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
 
-PODFILE CHECKSUM: ebc28e30e35d11bc2e4a7ec93234a4e78c309271
+PODFILE CHECKSUM: c5460438d9674589b774f210bd25695584dadb3e
 
 COCOAPODS: 1.2.0
