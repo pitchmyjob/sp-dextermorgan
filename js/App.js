@@ -30,6 +30,7 @@ import Recorder from './spitch/containers/RecorderContainer'
 import Replay from './spitch/containers/ReplayContainer'
 import Share from './spitch/containers/ShareContainer'
 import Video from './spitch/containers/VideoContainer'
+import SwipeVideo from './spitch/containers/SwipeVideoContainer'
 
 import ListFeed from './feed/containers/ListFeedContainer'
 
@@ -92,7 +93,7 @@ const Scenes = Actions.create(
             <Scene key="tabbar2" tabs={true} style={{borderTopWidth:1, borderTopColor: '#cccccc', backgroundColor:'white'}} >
 
 
-                <Scene {...sceneStyleTabbar} key="feed" title="Spitch" icon={tab} iconName="ios-albums-outline" component={ListFeed} titleStyle={{fontSize: 20, fontWeight:'500'}}/>
+                <Scene {...sceneStyleTabbar} key="feed" title="Spitch" icon={tab} iconName="ios-square-outline" component={ListFeed} titleStyle={{fontSize: 20, fontWeight:'500'}}/>
 
                 <Scene key="spitch" title="" component={() => null} icon={tab}  hideTabBar 
                   onSelect={() => Actions.swipeask()}  />
@@ -115,6 +116,7 @@ const Scenes = Actions.create(
         <Scene key="recorder" showNavigationBar={false}  animation="fade" component={Recorder} hideNavBar />
         <Scene key="replay" showNavigationBar={false}  component={Replay} hideNavBar />
         <Scene key="video" showNavigationBar={false} component={Video} hideNavBar animation="fade" />
+        <Scene key="swipevideo"  showNavigationBar={false} component={SwipeVideo} hideNavBar animation="fade" />
 
         <Scene {...sceneStyle} key="share" title="Partager" direction="vertical" component={Share} renderBackButton={()=>(null)} 
               renderRightButton={() => <CloseButton styles={{color:'#4A4A4A'}} onPress={() => Actions.tabbar({type:ActionConst.RESET})} />}/>

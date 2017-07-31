@@ -16,11 +16,44 @@ class Like extends Component {
 
   handleLike(){
     this.props.likeSpitch(this.props.id)
-    if(this.state.is_liked)
+    if(this.state.is_liked){
       this.setState({likes: this.state.likes - 1})
-    else
+      this.props.dislikeFeed(this.props.id)
+    }
+    else{
       this.setState({likes: this.state.likes + 1})
+      this.props.likeFeed(this.props.id)
+    }
     this.setState({is_liked: !this.state.is_liked})
+  }
+
+  // handleLike(){
+  //   this.props.likeSpitch(this.props.id)
+  //   if(this.props.is_liked){
+  //     this.props.likes = this.props.likes - 1
+  //   }
+  //   else{
+  //     this.props.likes = this.props.likes + 1
+  //     this.props.likeFeed(this.props.id)
+  //   }
+  //   this.props.is_liked = !this.props.is_liked
+  // }
+
+
+  componentWillReceiveProps(nextProps) {
+     if(this.props.feed){
+        this.setState({
+          is_liked:this.props.is_liked,
+          likes:this.props.likes
+        })
+      }
+
+      if(nextProps.id != this.props.id){
+        this.setState({
+          is_liked:this.props.is_liked,
+          likes:this.props.likes
+        })
+      }
   }
 
   render() {
@@ -31,7 +64,7 @@ class Like extends Component {
               <TouchableOpacity onPress={() => this.handleLike()}>
                  <Icon name="ios-heart-outline" style={{color:(this.state.is_liked ? '#e62117' : (this.props.color ? this.props.color : "#0064D4")), fontSize:28}} />
               </TouchableOpacity>
-            	<Text style={{color:(this.props.color ? this.props.color : "#000")}}>{this.state.likes}</Text>
+              <Text style={{color:(this.props.color ? this.props.color : "#000")}}>{this.state.likes}</Text>
             </Item>
         </View>
     )

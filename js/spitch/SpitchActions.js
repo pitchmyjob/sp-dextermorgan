@@ -4,8 +4,24 @@ import RNFetchBlob from 'react-native-fetch-blob'
 
 import { api, API_ROOT_URL }  from '../utils/request'
 import { appAuthToken } from '../utils/storage'
-import { INIT_NEW_SPITH, ADD_CLIP_NEW_SPITCH, REMOVE_CLIP_NEW_SPITCH, MERGE_CLIP_NEW_SPITCH, LIKE_SPITCH, RETRIEVE_SPITCH} from './SpitchConstants'
+import { INIT_NEW_SPITH, ADD_CLIP_NEW_SPITCH, REMOVE_CLIP_NEW_SPITCH, MERGE_CLIP_NEW_SPITCH, LIKE_SPITCH, RETRIEVE_SPITCH,
+  LIST_SPITCH_ASK, NEXT_LIST_SPITCH_ASK } from './SpitchConstants'
 
+
+
+export const listSpitchAsk = (id) => {
+  return {
+        type: LIST_SPITCH_ASK,
+        payload: api.get('ask/'+id+'/swipe/')
+  }
+}
+
+export const nextListSpitchAsk = (id, cursor) => {
+  return {
+        type: NEXT_LIST_SPITCH_ASK,
+        payload: api.get('ask/'+id+'/swipe/?cursor='+cursor)
+  }
+}
 
 export const retrieveSpitch = (id) => {
   return {

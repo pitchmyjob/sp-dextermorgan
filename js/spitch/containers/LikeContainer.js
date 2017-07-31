@@ -12,7 +12,13 @@ function mapDispatchToProps(dispatch){
   return {
     likeSpitch: (id) => {
       return dispatch(likeSpitch(id))
-    }
+    },
+    likeFeed:(id) => {
+    	return dispatch({type:'LIKE_FEED', id})
+    },
+    dislikeFeed:(id) => {
+    	return dispatch({type:'DISLIKE_FEED', id})
+    },
   }
 }
 

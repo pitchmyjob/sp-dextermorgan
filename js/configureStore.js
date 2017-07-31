@@ -6,6 +6,7 @@ import promise from 'redux-promise-middleware'
 
 import reducer from './reducer';
 
+
 export default function configureStore(onCompletion:()=>void):any {
   const enhancer = compose(
     applyMiddleware(promise(), thunk)

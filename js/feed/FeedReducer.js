@@ -1,6 +1,7 @@
 import { LIST_FEED_PENDING, LIST_FEED_FULFILLED, LIST_FEED_REJECTED,
 	NEXT_FEED_PENDING, NEXT_FEED_FULFILLED, NEXT_FEED_REJECTED,
-    REFRESH_FEED_PENDING, REFRESH_FEED_FULFILLED, REFRESH_FEED_REJECTED
+    REFRESH_FEED_PENDING, REFRESH_FEED_FULFILLED, REFRESH_FEED_REJECTED,
+    LIKE_FEED, DISLIKE_FEED
 } from './FeedConstants'
 
 
@@ -54,7 +55,27 @@ export default function(state = INITIAL_STATE, action) {
         	error:null, 
         	list: state.list.concat(action.payload.data.results), 
         	pagination: {...action.payload.data, results: undefined}  }
-    
+
+    case LIKE_FEED:
+        return { ...state,
+            list: state.list.map(function(item) {
+                 if(item.content_object.id == action.id){
+                    item.content_object.likes=item.content_object.likes+1
+                    item.content_object.is_liked = true
+                 }
+                  return item
+              })
+        }
+    case DISLIKE_FEED:
+        return { ...state,
+            list: state.list.map(function(item) {
+                 if(item.content_object.id == action.id){
+                    item.content_object.likes=item.content_object.likes-1
+                    item.content_object.is_liked = false
+                 }
+                  return item
+              })
+        }
 
     default:
     	return state;

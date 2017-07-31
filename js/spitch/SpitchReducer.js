@@ -1,8 +1,11 @@
 import {
+    RESET_VIDEOS,
     INIT_NEW_SPITH, ADD_CLIP_NEW_SPITCH, REMOVE_CLIP_NEW_SPITCH, MERGE_CLIP_NEW_SPITCH,
     UPLOAD_SPITCH_PENDING, UPLOAD_SPITCH_FULFILLED, UPLOAD_SPITCH_REJECTED,
     LIKE_SPITCH_PENDING, LIKE_SPITCH_FULFILLED, LIKE_SPITCH_REJECTED,
-    RETRIEVE_SPITCH_PENDING, RETRIEVE_SPITCH_FULFILLED, RETRIEVE_SPITCH_REJECTED
+    RETRIEVE_SPITCH_PENDING, RETRIEVE_SPITCH_FULFILLED, RETRIEVE_SPITCH_REJECTED,
+    LIST_SPITCH_ASK_PENDING, LIST_SPITCH_ASK_FULFILLED, LIST_SPITCH_ASK_REJECTED,
+    NEXT_LIST_SPITCH_ASK_PENDING, NEXT_LIST_SPITCH_ASK_FULFILLED, NEXT_LIST_SPITCH_ASK_REJECTED
 } from './SpitchConstants'
 
 
@@ -10,6 +13,7 @@ const INITIAL_STATE = {
     recorder: {pending: false, fulfilled: false, error: null, id:null, text:null, clips:[], video:null, final:null, thumb:null, progress:0},
     like: {pending: false, fulfilled: false, error: null},
     video: {pending: false, fulfilled: false, error: null, data:null},
+    videos: {pending: false, fulfilled: false, error: null, list:[], pagination: null, nextPending: false, nextFetched: false},
 };
 
 
@@ -48,6 +52,30 @@ export default function(state = INITIAL_STATE, action) {
     case RETRIEVE_SPITCH_REJECTED:
         return { ...state, video: { pending: false, fulfilled: false, error:action.payload.response } }
 
+    case RESET_VIDEOS:
+        return { ...state, videos: {pending: false, fulfilled: false, error: null, list:[], pagination: null, nextPending: false, nextFetched: false} }
+
+    case LIST_SPITCH_ASK_PENDING:
+        return { ...state, videos: { ...state.videos, pending: true, fulfilled: false, error: null } }
+    case LIST_SPITCH_ASK_REJECTED:
+        return { ...state, videos: { ...state.videos, pending: false, fulfilled: false, error:action.payload.response } }
+    case LIST_SPITCH_ASK_FULFILLED:
+        return { ...state, videos: { ...state.videos, pending: false, fulfilled: true, error:null, 
+            list: action.payload.data.results, 
+            pagination: {...action.payload.data, results: undefined}  
+        }}
+
+    case NEXT_LIST_SPITCH_ASK_PENDING:
+        return { ...state, videos: { ...state.videos, nextPending: true, nextFetched: false, error:null } }
+    case NEXT_LIST_SPITCH_ASK_REJECTED:
+        return { ...state, videos: { ...state.videos, nextPending: false, nextFetched: false, error:action.payload.response  } }
+    case NEXT_LIST_SPITCH_ASK_FULFILLED:
+        return { ...state, videos: { ...state.videos,
+            nextPending: false, 
+            nextFetched: true, 
+            error:null, 
+            list: state.videos.list.concat(action.payload.data.results), 
+            pagination: {...action.payload.data, results: undefined}  } }
     
     default:
     	return state;

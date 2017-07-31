@@ -1,6 +1,6 @@
 import React, { Component, Dimensions } from 'react';
-import { Image, TouchableOpacity, ListView, TextInput } from 'react-native';
-import { Container, Content, Text, Item, Icon, Input, Right, View, Thumbnail, Spinner, Card, CardItem, Left, Body, Button } from 'native-base';
+import { Image, TouchableOpacity, ListView, TextInput, StatusBar, Text } from 'react-native';
+import { Container, Content, Item, Icon, Input, Right, View, Thumbnail, Spinner, Card, CardItem, Left, Body, Button } from 'native-base';
 import { Actions, ActionConst} from 'react-native-router-flux';
 
 import styles from '../styles/swipe'
@@ -46,6 +46,21 @@ const Slide = props => {
           <View style={styles.slidebtn}>
               <ButtonSpitch onPress={() => Actions.recorder({type:ActionConst.REPLACE, id:item.id, text:item.text}) }/>
           </View>
+
+          {item.spitchs > 0 && 
+          <View style={styles.slidebtnSpitch}>
+              <Button block bordered light style={styles.btnSpitch} onPress={() => Actions.swipevideo({id:item.id})}>
+                <Text style={{fontSize:14, color:'white'}}>Voir les {item.spitchs} réponses</Text>
+              </Button>
+          </View>
+          ||
+          <View style={styles.slidebtnSpitch}>
+              <Button block bordered light style={styles.btnSpitch}>
+                <Text style={{fontSize:14, color:'white'}}>Aucune réponse</Text>
+              </Button>
+          </View>
+          }
+          
 
     </View>
   )
@@ -155,6 +170,10 @@ class SwipeAsk extends Component {
 
     return (
       <View style={styles.container}>
+          <StatusBar 
+              animated
+              hidden 
+            />
           
           
           {this.state.display && swipe.items.length > 0 &&

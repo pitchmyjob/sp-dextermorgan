@@ -1,5 +1,5 @@
-import React, { Component, Dimensions, } from 'react';
-import { Image, TouchableWithoutFeedback, ListView, TextInput, StatusBar, TouchableHighlight, Platform} from 'react-native';
+import React, { Component, } from 'react';
+import { Image, TouchableWithoutFeedback, ListView, TextInput, StatusBar, TouchableHighlight, Platformn, Dimensions} from 'react-native';
 import { Text, View, Icon, Item, Thumbnail, Spinner, Right} from 'native-base';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Video from 'react-native-video';
@@ -7,6 +7,7 @@ import Video from 'react-native-video';
 import { FullLoader } from '../../themes/base'
 import styles from '../styles/video'
 import Like from '../../spitch/containers/LikeContainer'
+import * as Progress from 'react-native-progress';
 
 
 class VideoSpitch extends Component {
@@ -14,10 +15,13 @@ class VideoSpitch extends Component {
   constructor(props) { 
     super(props);
     this.onLoad = this.onLoad.bind(this)
+    this.onProgress = this.onProgress.bind(this)
+    this.onEnd = this.onEnd.bind(this)
     this.player=null
     this.state={
       paused:false,
-      loader:true
+      loader:true,
+      progress:0.001
     }
   }
 
@@ -36,6 +40,18 @@ class VideoSpitch extends Component {
   onPressOut(){
     this.setState({paused:false})
   }
+
+  onProgress(data) {
+    if(data.playableDuration >= data.currentTime){
+      var calcul = data.currentTime/data.playableDuration
+      this.setState({progress:calcul ? calcul : 0.001})
+    }
+  }
+
+  onEnd(){
+    this.setState({progress:1})
+  }
+
 
   render() {
     const { video, item } = this.props
@@ -61,6 +77,8 @@ class VideoSpitch extends Component {
                   muted={false} 
                   paused={this.state.paused}
                   onLoad={this.onLoad}
+                  onProgress={this.onProgress}
+                  onEnd={this.onEnd}
                 /> 
                 
 
@@ -84,7 +102,17 @@ class VideoSpitch extends Component {
                     </Item>
                  </View> 
               </TouchableWithoutFeedback>
-            
+
+              <Progress.Bar 
+                  progress={this.state.progress} 
+                  borderWidth={0}
+                  color="#5c62e9"
+                  unfilledColor="rgba(27, 31, 35, 0.60)" 
+                  borderRadius={0} 
+                  width={Dimensions.get('window').width} 
+                  style={{position:'absolute',bottom:0}}/>
+              
+
             
             {this.state.loader && 
               <FullLoader />

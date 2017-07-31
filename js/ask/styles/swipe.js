@@ -69,7 +69,7 @@ export default {
     width: Dimensions.get('window').width
   },
   slidebtn:{
-    marginBottom:60
+    marginBottom:50
   }, 
   slideitem:{
     borderBottomWidth:0,
@@ -81,6 +81,15 @@ export default {
   slideuser2:{
     color:'white',
     fontWeight:"700"
+  },
+  slidebtnSpitch:{
+    width: Dimensions.get('window').width,
+    paddingLeft:5,
+    paddingRight:5,
+    paddingBottom:5,
+    opacity:0.8
+  },
+  btnSpitch:{
   }
 
 

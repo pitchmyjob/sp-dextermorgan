@@ -3,11 +3,17 @@ var { Dimensions } = React;
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
-
 export default {
   container: {
     flex: 1,
-    backgroundColor: 'black'
+    width: null,
+    height: null,
+    backgroundColor:'black'
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   fullScreen: {
     position: 'absolute',
@@ -16,6 +22,9 @@ export default {
     right:0,
     left:0
   }, 
+
+
+
   question:{
     position: 'absolute',
     top:0,

@@ -226,6 +226,7 @@ class Recorder extends Component {
       )
    }
 
+   
 
   render() {
     const { spitch } = this.props
@@ -270,9 +271,7 @@ class Recorder extends Component {
 
               {this.state.display && !this.state.isRecording && 
                <View style={styles.btncontrol}>
-                  <TouchableOpacity onPress={() => this.switchFlash() }>
-                      <Image source={require('../../../assets/images/flash.png')} />
-                  </TouchableOpacity>
+                  
                   <TouchableOpacity onPress={() => this.switchType() }>
                       <Image source={require('../../../assets/images/switch.png')} style={{marginTop:20}}/>
                   </TouchableOpacity>

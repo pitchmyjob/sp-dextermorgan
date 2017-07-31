@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, View, TouchableOpacity, ListView, TouchableWithoutFeedback } from 'react-native';
+import { Image, View, TouchableOpacity, ListView, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
 import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Item, Input, Spinner } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
@@ -34,7 +34,7 @@ class SpitchFeed extends Component {
                  </Right>
               </CardItem>
               <CardItem cardBody>
-                  <TouchableOpacity onPress={() => Actions.video({item:obj})}>
+                  <TouchableHighlight onPress={() => Actions.video({item:obj})}>
                       <Image
                         source={{uri:obj.thumb}}
                         style={styles.thumbImage}
@@ -43,12 +43,12 @@ class SpitchFeed extends Component {
                             {obj.ask.text}
                         </Text>
                       </Image>
-                  </TouchableOpacity>
+                  </TouchableHighlight>
               </CardItem>
 
               <CardItem style={{flex: 1, flexDirection: 'row', paddingLeft:0, paddingRight:0, paddingBottom:15}}>
 
-              <Like id={obj.id} likes={obj.likes} is_liked={obj.is_liked}/>
+              <Like id={obj.id} likes={obj.likes} is_liked={obj.is_liked} feed={true}/>
 	
 	            <TouchableOpacity style={{flex:3, alignItems: 'center'}} onPress={() => Actions.recorder({id:obj.ask.id, text:obj.ask.text}) }>
 	                <Image source={require('../../../assets/images/btn-spitch.png')} style={{width:140, height:45}}/>

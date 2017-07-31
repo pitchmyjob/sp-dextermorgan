@@ -74,7 +74,7 @@ export default {
     height:60,
   },
   question:{
-  	width:width,
+  	width:width-5,
   	paddingTop:25,
   	paddingLeft:10,
   	alignItems: 'flex-start',

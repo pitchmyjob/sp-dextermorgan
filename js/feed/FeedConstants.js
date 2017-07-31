@@ -12,3 +12,6 @@ export const NEXT_FEED = 'NEXT_FEED'
 export const NEXT_FEED_PENDING = `${NEXT_FEED}_PENDING`
 export const NEXT_FEED_FULFILLED = `${NEXT_FEED}_FULFILLED`
 export const NEXT_FEED_REJECTED = `${NEXT_FEED}_REJECTED`
+
+export const LIKE_FEED = 'LIKE_FEED'
+export const DISLIKE_FEED = 'DISLIKE_FEED'
