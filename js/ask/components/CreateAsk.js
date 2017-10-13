@@ -8,6 +8,7 @@ import { renderInputAsk } from '../../utils/forms/renderers'
 import { isRequired, minLength } from '../../utils/forms/validators'
 
 import styles from '../styles/create'
+import I18n from '../../i18n';
 
 class CreateAsk extends Component {
 
@@ -24,15 +25,15 @@ class CreateAsk extends Component {
     return (
       <Container style={styles.container}>
 
-          <View style={[styles.body, Platform.select({ios: {height:210}, android: {height:120}, }) ]}>
+          <View style={[styles.body, Platform.select({ios: {height:150}, android: {height:120}, }) ]}>
 
-              <Item style={{borderColor:'transparent'}}>
+              <Item style={{borderColor:'transparent', alignItems:'flex-start'}}>
                   <Image source={{uri:user.photo}} style={styles.imguser} />
                    
                     <Field
                       name="text"
                       component={renderInputAsk}
-                      placeholder="Posez votre question à la communauté"
+                      placeholder={I18n.t('createAsk_text1')}
                       validate={[isRequired, minLength(3)]}
                     />
               </Item>
@@ -41,10 +42,10 @@ class CreateAsk extends Component {
 
           <View style={styles.footer}>
                 <Text style={styles.footertxt}>
-                  Ajoutez des # pour toucher un
+                  {I18n.t('createAsk_text2')}
                 </Text>
                 <Text style={styles.footertxt}>
-                   maximum d'utilisateurs.
+                  {I18n.t('createAsk_text3')}
                 </Text>
 
                 <View style={styles.btn}>
@@ -52,7 +53,7 @@ class CreateAsk extends Component {
                     { ask.pending && 
                       <ButtonLoaderGradient />
                     ||
-                      <ButtonGradient onPress={handleSubmit} text="ENVOYER AU SPITCHER" />
+                      <ButtonGradient onPress={handleSubmit} text={I18n.t('createAsk_btn')} />
                     }
                   </View>
                 </View>

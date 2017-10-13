@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import ListFacebook from '../components/ListFacebook';
-import { listFacebookFriend, followUser, activeFacebookFriend, followAllUser} from '../RelationActions'
+import { listFacebookFriend, followUser, unfollowUser, activeFacebookFriend, unactiveFacebookFriend, followAllUser} from '../RelationActions'
 
 
 function mapStateToProps(state, ownProps) {
@@ -17,8 +17,12 @@ function mapDispatchToProps(dispatch){
     	return dispatch(listFacebookFriend())
     },
     followUser: (id) => {
-    	dispatch(activeFacebookFriend(id))
-    	return dispatch(followUser(id))
+      dispatch(activeFacebookFriend(id))
+      return dispatch(followUser(id))
+    },
+    unfollowUser: (id) => {
+    	dispatch(unactiveFacebookFriend(id))
+    	return dispatch(unfollowUser(id))
     },
     followAll: () => {
       return dispatch(followAllUser())

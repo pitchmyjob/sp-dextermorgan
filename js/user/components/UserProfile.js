@@ -22,12 +22,12 @@ class UserProfile extends Component {
   }
 
   nextListUserSpitch(){
-    if(this.props.user.spitch.pagination.next_cursor)
+    if(this.props.user.spitch.pagination)
         this.props.nextListUserSpitch(this.props.user.profile.data.id, this.props.user.spitch.pagination.next_cursor)
   }
 
   nextListUserAsk(){
-    if(this.props.user.ask.pagination.next_cursor)
+    if(this.props.user.ask.pagination)
         this.props.nextListUserAsk(this.props.user.profile.data.id, this.props.user.ask.pagination.next_cursor)
   }
 
@@ -42,7 +42,13 @@ class UserProfile extends Component {
 
       return (
         <View style={{flex:1, marginBottom: 50}}>
-            <Profile user={user} nextListSpitch={this.nextListUserSpitch} nextListAsk={this.nextListUserAsk} refreshProfile={this.refreshProfile}/>
+            <Profile 
+              user={user} 
+              nextListSpitch={this.nextListUserSpitch} 
+              nextListAsk={this.nextListUserAsk} 
+              refreshProfile={this.refreshProfile} 
+              me={true}
+              deleteSpitch={this.props.deleteSpitch}/>
         </View>
       );
     

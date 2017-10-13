@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import Facebook from '../containers/FacebookContainer'
 
 import styles from '../styles/styles'
-
+import I18n from '../../i18n';
 
 import { appAuthToken } from '../../utils/storage' // A ENLEVER
 
@@ -27,7 +27,7 @@ class Home extends Component {
 
   // A ENLEVER 
   forceLogin(){
-      appAuthToken.storeSessionToken("e5d934d25bfd68cba4b252caf6e88965dc71a2b1")
+      appAuthToken.storeSessionToken("cd06fd44334109290eb918fa66c34facb9c6c746")
       // appAuthToken.storeSessionToken("9d40d68a23e5bce18c2937e8eda01ab5100c17a7")
   }
   
@@ -57,7 +57,7 @@ class Home extends Component {
             <View style={styles.botcontainer}>
 
                 <Text style={styles.text}>
-                    Ask anyone, anything
+                    {I18n.t('home')}
                 </Text>
 
                 <View style={styles.footer}>
@@ -68,7 +68,7 @@ class Home extends Component {
             </View>
           }
 
-           
+ 
         </Image>
       </Container>
     );

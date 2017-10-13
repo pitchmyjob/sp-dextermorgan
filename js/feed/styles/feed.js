@@ -1,6 +1,7 @@
 var React = require('react-native');
 var { Dimensions } = React; 
 var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 export default {
   container: {
@@ -102,5 +103,43 @@ export default {
     bottom:20,
     color:'#BABCBE',
     fontSize:14
+  },
+  ratingView:{
+    position:'absolute', 
+    top:0, 
+    left:0, 
+    height:150,
+    width:width,
+    height: height-100,
+    backgroundColor:'rgba(52, 52, 52, 0.4)', 
+    flex:1, 
+    zIndex:11000,
+    alignItems: 'center',justifyContent: 'center',
+  },
+  ratingBloc:{
+    width:250,
+    height:180,
+    backgroundColor:'white',
+    borderRadius: 8,
+    alignItems: 'center',
+    paddingTop:10,
+    paddingBottom:15
+  },
+  text1:{
+    fontSize:18
+  },
+  text2:{
+    fontSize:12,
+    paddingTop:2
+  },
+  blocstar:{
+    flex: 1, flexDirection: 'row',
+    paddingTop:15,
+  },
+  star:{
+    width:30, 
+    height:29,
+    marginLeft:4,
+    marginRight:4
   }
 }; 

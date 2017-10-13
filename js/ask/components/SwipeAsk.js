@@ -4,6 +4,7 @@ import { Container, Content, Item, Icon, Input, Right, View, Thumbnail, Spinner,
 import { Actions, ActionConst} from 'react-native-router-flux';
 
 import styles from '../styles/swipe'
+import I18n from '../../i18n';
 
 import { parseDate } from '../../utils/date'
 import { FullLoader, ButtonSpitch } from '../../themes/base'
@@ -30,7 +31,7 @@ const Slide = props => {
 
             <Item style={styles.slideitem} onPress={() => Actions.visit({id:item.user.id}) }>
               <Thumbnail source={{uri:item.user.photo+".115x115"}} small circular/>
-              <Text style={styles.slideuser}>Par </Text>
+              <Text style={styles.slideuser}>{I18n.t('swipeAsk_text1')} </Text>
               <Text style={styles.slideuser2}>{item.user.username}</Text>
             </Item>
 
@@ -44,19 +45,19 @@ const Slide = props => {
           }
 
           <View style={styles.slidebtn}>
-              <ButtonSpitch onPress={() => Actions.recorder({type:ActionConst.REPLACE, id:item.id, text:item.text}) }/>
+              <ButtonSpitch onPress={() => Actions.recorder({type:ActionConst.REPLACE, id:item.id, text:item.text, backtoswipe:true}) }/>
           </View>
 
           {item.spitchs > 0 && 
           <View style={styles.slidebtnSpitch}>
               <Button block bordered light style={styles.btnSpitch} onPress={() => Actions.swipevideo({id:item.id})}>
-                <Text style={{fontSize:14, color:'white'}}>Voir les {item.spitchs} réponses</Text>
+                <Text style={{fontSize:14, color:'white'}}>{I18n.t('swipeAsk_text2')} {item.spitchs} {I18n.t('swipeAsk_text3')}</Text>
               </Button>
           </View>
           ||
           <View style={styles.slidebtnSpitch}>
               <Button block bordered light style={styles.btnSpitch}>
-                <Text style={{fontSize:14, color:'white'}}>Aucune réponse</Text>
+                <Text style={{fontSize:14, color:'white'}}>{I18n.t('swipeAsk_text4')}</Text>
               </Button>
           </View>
           }
@@ -159,6 +160,18 @@ class SwipeAsk extends Component {
 
       if(newIndex == next && cursor){
           this.props.nextSwipeAsk(cursor)
+      }
+
+      if(newIndex < 0 && (newIndex*-1) == next && cursor){
+          this.props.nextSwipeAsk(cursor)
+      }
+
+      if(newIndex > 0 && newIndex == max && !cursor){
+          this.setState({ lastIndex: 0, index: 0 })
+      }
+
+      if(newIndex < 0 && (newIndex*-1) == max && !cursor){
+          this.setState({ lastIndex: 0, index: 0 })
       }
       
   }

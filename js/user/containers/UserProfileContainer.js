@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import UserProfile from '../components/UserProfile' ;
 import { retreiveUserDatas, listUserSpitch, nextListUserSpitch, listUserAsk, nextListUserAsk } from '../UserActions'
+import { deleteSpitch } from '../../spitch/SpitchActions'
 
 function mapStateToProps(state, ownProps) {
   return { 
@@ -25,7 +26,12 @@ function mapDispatchToProps(dispatch){
   	},
   	nextListUserAsk:(id, cursor) =>{
   		return dispatch(nextListUserAsk(id, cursor))
-  	}
+  	},
+    deleteSpitch:(id) =>{
+      return dispatch(deleteSpitch(id)).then(function(){
+          dispatch({type:'REMOVE_LIST_USER_SPITCH', id})
+      })
+    }
   }
 }
 

@@ -12,7 +12,7 @@ import { isRequired } from '../../utils/forms/validators'
 import { ButtonGradient, ButtonLoaderGradient } from '../../themes/base'
 
 import styles from '../styles/facebookform'
-
+import I18n from '../../i18n';
 
 
 class FacebookForm extends Component {
@@ -22,7 +22,9 @@ class FacebookForm extends Component {
     this._responseInfoCallback = this._responseInfoCallback.bind(this)
     this.state = { 
       form:false,
-      keyboard:false
+      keyboard:false,
+      first_name:"",
+      photo:"https://s3-eu-west-1.amazonaws.com/spitchdev-bucket-uwfmzpv98dvk/media/default/default.jpg"
     };
     this.imguser = new Animated.Value(115);
     this.bg = new Animated.Value(173);
@@ -93,7 +95,7 @@ class FacebookForm extends Component {
     } else {
       
        btn = (
-        <ButtonGradient onPress={handleSubmit} text="S'INSCRIRE"/>
+        <ButtonGradient onPress={handleSubmit} text={I18n.t('facebookForm_register')} />
       )
     }
 
@@ -114,14 +116,14 @@ class FacebookForm extends Component {
                 }
 
               <Text style={styles.textwelcolme}>
-                 Hello {this.state.first_name}
+                 {I18n.t('facebookForm_hello')} {this.state.first_name}
               </Text>
 
               <View style={this.state.keyboard ? styles.formopen : styles.form}>
                   <Field
                         name="username"
                         component={renderInput}
-                        placeholder="Nom d'utilisateur"
+                        placeholder={I18n.t('facebookForm_username')}
                         icon="md-mail"
                         validate={isRequired}
                       />

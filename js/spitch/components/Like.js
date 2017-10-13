@@ -62,7 +62,12 @@ class Like extends Component {
         <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
             <Item style={{alignItems: 'center', borderColor:'transparent'}}>
               <TouchableOpacity onPress={() => this.handleLike()}>
-                 <Icon name="ios-heart-outline" style={{color:(this.state.is_liked ? '#e62117' : (this.props.color ? this.props.color : "#0064D4")), fontSize:28}} />
+                { this.state.is_liked && 
+                 <Icon name="ios-heart" style={{color: '#e62117', fontSize:28}} />
+                 ||
+                 <Icon name="ios-heart-outline" style={{color:this.props.color ? this.props.color : "#0064D4", fontSize:28}} />
+                }
+
               </TouchableOpacity>
               <Text style={{color:(this.props.color ? this.props.color : "#000")}}>{this.state.likes}</Text>
             </Item>

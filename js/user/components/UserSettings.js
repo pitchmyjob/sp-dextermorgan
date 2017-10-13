@@ -4,6 +4,7 @@ import { Container, Content, List, ListItem, Text, Icon, Badge, Left, Body, Righ
 import { Actions } from 'react-native-router-flux';
 
 import styles from '../styles/settings'
+import I18n from '../../i18n';
 
 
 class UserSettings extends Component {
@@ -14,6 +15,27 @@ class UserSettings extends Component {
     }
   }
 
+ // <ListItem icon last>
+ //                      <Body>
+ //                        <Text>{I18n.t('userSettings_text3')}</Text>
+ //                      </Body>
+ //                      <Right>
+ //                          <Icon name="arrow-forward" />
+ //                      </Right>
+ //                  </ListItem>
+
+ //                  <ListItem itemDivider>
+ //                      <Text>{I18n.t('userSettings_text4')}</Text>
+ //                  </ListItem> 
+
+ //                  <ListItem icon>
+ //                      <Body>
+ //                        <Text>{I18n.t('userSettings_text5')}</Text>
+ //                      </Body>
+ //                      <Right>
+ //                          <Switch value={true} />
+ //                      </Right>
+ //                  </ListItem> 
 
   render() {
     const { user, logout } = this.props
@@ -23,12 +45,12 @@ class UserSettings extends Component {
           <Content>
 
                   <ListItem itemDivider >
-                      <Text>Mon compte</Text>
+                      <Text>{I18n.t('userSettings_text1')}</Text>
                   </ListItem>  
 
                   <ListItem icon >
                       <Body >
-                        <Text>Email</Text>
+                        <Text>{I18n.t('userSettings_text2')}</Text>
                       </Body>
                       <Right>
                           <Text>{user.email}</Text>
@@ -36,33 +58,14 @@ class UserSettings extends Component {
                       </Right>
                   </ListItem>
 
-                  <ListItem icon last>
-                      <Body>
-                        <Text>Mot de passe</Text>
-                      </Body>
-                      <Right>
-                          <Icon name="arrow-forward" />
-                      </Right>
-                  </ListItem>
-
-                  <ListItem itemDivider>
-                      <Text>Notification</Text>
-                  </ListItem> 
-
-                  <ListItem icon>
-                      <Body>
-                        <Text>Notification</Text>
-                      </Body>
-                      <Right>
-                          <Switch value={true} />
-                      </Right>
-                  </ListItem> 
-
-                  <ListItem >
-                      <TouchableOpacity onPress={() => logout() }>
-                          <Text style={{color:'red'}}>Déconnexion</Text>
-                      </TouchableOpacity>
-                  </ListItem> 
+                 
+                  
+                    <ListItem >
+                        <TouchableOpacity onPress={() => logout() } style={{flex:1, flexDirection: 'row', justifyContent: 'flex-start', alignItems:'flex-start',  }}>
+                            <Text style={{color:'red', textAlign: 'left'}}>{I18n.t('userSettings_text6')}</Text>
+                        </TouchableOpacity>
+                    </ListItem> 
+                  
 
                  
  

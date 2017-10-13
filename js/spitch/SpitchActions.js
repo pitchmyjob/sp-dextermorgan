@@ -5,7 +5,7 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import { api, API_ROOT_URL }  from '../utils/request'
 import { appAuthToken } from '../utils/storage'
 import { INIT_NEW_SPITH, ADD_CLIP_NEW_SPITCH, REMOVE_CLIP_NEW_SPITCH, MERGE_CLIP_NEW_SPITCH, LIKE_SPITCH, RETRIEVE_SPITCH,
-  LIST_SPITCH_ASK, NEXT_LIST_SPITCH_ASK } from './SpitchConstants'
+  LIST_SPITCH_ASK, NEXT_LIST_SPITCH_ASK, REPORT_SPITCH, DELETE_SPITCH, RESET_MERGE_CLIP_NEW_SPITCH } from './SpitchConstants'
 
 
 
@@ -30,6 +30,20 @@ export const retrieveSpitch = (id) => {
   }
 }
 
+
+export const reportSpitch = (spitch) => {
+  return {
+        type: REPORT_SPITCH,
+        payload: api.post('report/', {spitch})
+  }
+}
+
+export const deleteSpitch = (id) => {
+  return {
+        type: DELETE_SPITCH,
+        payload: api.patch('spitch/'+id+'/delete/', {})
+  }
+}
 
 export const likeSpitch = (spitch) => {
   return {
@@ -60,9 +74,15 @@ export const removeClip = () => {
 }
 
 export const mergeClip = (video) => {
-	return {
+  return {
       type: MERGE_CLIP_NEW_SPITCH,
       video:video
+  } 
+}
+
+export const resetMergeClip = (video) => {
+	return {
+      type: RESET_MERGE_CLIP_NEW_SPITCH
   } 
 }
 

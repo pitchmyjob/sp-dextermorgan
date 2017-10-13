@@ -1,7 +1,8 @@
 import { Alert } from 'react-native'
 import { Actions, ActionConst } from 'react-native-router-flux'
 
-import { LIST_FACEBOOK_FRIEND, FOLLOW_USER, ACTIVE_FACEBOOK_FRIEND, FOLLOW_ALL_USER, LIST_RELATION } from './RelationConstants'
+import { LIST_FACEBOOK_FRIEND, FOLLOW_USER, UNFOLLOW_USER, ACTIVE_FACEBOOK_FRIEND, UNACTIVE_FACEBOOK_FRIEND, 
+  FOLLOW_ALL_USER, LIST_RELATION, ACTIVE_FOLLOW_USER, UNACTIVE_FOLLOW_USER } from './RelationConstants'
 import { api }  from '../utils/request'
 
 
@@ -13,9 +14,16 @@ export const listFacebookFriend = () => {
 }
 
 export const followUser = (follow) => {
-	return {
+  return {
       type: FOLLOW_USER,
       payload: api.post('/relation/follow/', {follow})
+  }
+}
+
+export const unfollowUser = (follow) => {
+	return {
+      type: UNFOLLOW_USER,
+      payload: api.delete('/relation/unfollow/'+follow+'/')
   }
 }
 
@@ -28,11 +36,32 @@ export const followAllUser = () => {
 
 
 export const activeFacebookFriend = (id) => {
-	return {
+  return {
       type: ACTIVE_FACEBOOK_FRIEND,
       id
   }
 }
+export const unactiveFacebookFriend = (id) => {
+  return {
+      type: UNACTIVE_FACEBOOK_FRIEND,
+      id
+  }
+}
+
+export const activeFollowUser = (id) => {
+  return {
+      type: ACTIVE_FOLLOW_USER,
+      id
+  }
+}
+
+export const unactiveFollowUser = (id) => {
+	return {
+      type: UNACTIVE_FOLLOW_USER,
+      id
+  }
+}
+
 
 export const listFollow = (id, search=null) => {
   return {

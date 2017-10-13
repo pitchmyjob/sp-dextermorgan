@@ -39,8 +39,6 @@ export const verifAuthFacebook = (values) => {
           Actions.tabbar({type: ActionConst.REPLACE}) // changer
 
       }).catch((error) => {
-        console.log('okkkkkkk')
-        console.log(error)
           Actions.facebookForm({type: ActionConst.REPLACE})
       })
   }

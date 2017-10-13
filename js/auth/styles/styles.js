@@ -26,6 +26,8 @@ export default {
     alignItems: 'center',
   },
   logo:{
+    width:90,
+    height:90
   },
   textlogo:{
     backgroundColor: 'rgba(0,0,0,0)',

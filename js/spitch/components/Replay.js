@@ -11,6 +11,7 @@ import { API_ROOT_URL }  from '../../utils/request'
 
 import RNVideoEditor from 'react-native-video-editor';
 import RNFetchBlob from 'react-native-fetch-blob'
+import I18n from '../../i18n';
 
 
 class Replay extends Component {
@@ -30,7 +31,8 @@ class Replay extends Component {
   } 
 
   componentDidMount(){
-
+    this.props.resetMergeClip()
+    
     RNVideoEditor.merge(
       this.props.spitch.clips,
       (results) => {
@@ -77,8 +79,8 @@ class Replay extends Component {
               uploadFulfilled(link, thumb)
               // Actions.share()
               Alert.alert(
-                'Merci :)',
-                'Votre spitch a bien été envoyé !',
+                I18n.t('replay_act1'),
+                I18n.t('replay_act2'),
                 [
                   {text: 'Ok', onPress: () => {Actions.tabbar({type:ActionConst.RESET})} }
                 ],
@@ -125,7 +127,7 @@ class Replay extends Component {
 
             {spitch.video &&
               <Item style={styles.next}> 
-                  <ButtonGradient text="ENVOYER" onPress={ () => this.upload()}/>
+                  <ButtonGradient text={I18n.t('replay_btn')} onPress={ () => this.upload()}/>
               </Item>
               ||
                 <View style={styles.next}>

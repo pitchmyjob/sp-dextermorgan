@@ -1,7 +1,8 @@
 import { LIST_FEED_PENDING, LIST_FEED_FULFILLED, LIST_FEED_REJECTED,
 	NEXT_FEED_PENDING, NEXT_FEED_FULFILLED, NEXT_FEED_REJECTED,
     REFRESH_FEED_PENDING, REFRESH_FEED_FULFILLED, REFRESH_FEED_REJECTED,
-    LIKE_FEED, DISLIKE_FEED
+    LIKE_FEED, DISLIKE_FEED,
+    DELETE_FEED_PENDING, DELETE_FEED_FULFILLED, DELETE_FEED_REJECTED
 } from './FeedConstants'
 
 
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
 	nextPending: false, 
 	nextFetched: false,
 	refreshPending: false,
+    actionPending:false,
 	list:[]
 };
 
@@ -56,6 +58,21 @@ export default function(state = INITIAL_STATE, action) {
         	list: state.list.concat(action.payload.data.results), 
         	pagination: {...action.payload.data, results: undefined}  }
 
+    case DELETE_FEED_PENDING:
+        return { ...state, error:null, actionPending:true }
+    case DELETE_FEED_REJECTED:
+        return { ...state, error:action.payload.response, actionPending:false  }
+    case DELETE_FEED_FULFILLED:
+        return { ...state,
+            actionPending:false,
+            list: state.list.map(function(item) {
+                     if(item.id == action.payload.data.id){
+                        item.feed_type = 0
+                     }
+                     return item
+                  })
+        }
+
     case LIKE_FEED:
         return { ...state,
             list: state.list.map(function(item) {
@@ -76,6 +93,8 @@ export default function(state = INITIAL_STATE, action) {
                   return item
               })
         }
+
+    
 
     default:
     	return state;

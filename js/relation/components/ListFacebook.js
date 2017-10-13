@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import { Image, View, TouchableOpacity } from 'react-native';
 import { Container, Spinner, Content, Footer, List, ListItem, Thumbnail, Text, Body, Left, Right, Separator, Button, Icon} from 'native-base';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 import styles from '../styles/facebook'
+import I18n from '../../i18n';
 
 
 class ListFriend extends Component {
@@ -20,14 +21,13 @@ class ListFriend extends Component {
     this.props.listFacebookFriend();
   }
 
-  follow(id) {
-      fr = this.props.relation.list.map(function(item) {
-         if(item.id == id)
-            item.follow=true
-          return item
-      });
+  followAll(){
+      this.props.followAll()
+      if(this.props.register){
+          Actions.tabbar({type: ActionConst.RESET})
+          // Actions.swipeask()
+      }
   }
-
 
   renderList(){
       const { facebook } = this.props;
@@ -36,7 +36,7 @@ class ListFriend extends Component {
 
         return(
           <ListItem >
-            <Text style={{color: 'red'}}>Erreur...</Text>
+            <Text style={{color: 'red'}}>{I18n.t('listFacebook_text1')}</Text>
           </ListItem>
         )
 
@@ -47,7 +47,7 @@ class ListFriend extends Component {
           return(
               <ListItem avatar key={index}>
                   <Left>
-                      <Thumbnail small source={require('../../../assets/images/user.png')} />
+                      <Thumbnail small source={{uri:friend.photo+".115x115"}} />
                   </Left>
                   <Body>
                       <Text>{friend.first_name} {friend.last_name}</Text>
@@ -55,12 +55,12 @@ class ListFriend extends Component {
                   </Body>
                   <Right>
                     {friend.follow &&
-                      <Button small bordered>
+                      <Button small bordered onPress={() => this.props.unfollowUser(friend.id) }>
                           <Icon name='checkmark' style={{color:'blue'}}/>
                       </Button>
                       ||
                       <Button small primary onPress={() => this.props.followUser(friend.id) }>
-                          <Text>Suivre </Text>
+                          <Text>{I18n.t('listFacebook_btn1')}</Text>
                       </Button>
                     }
                   </Right>
@@ -85,7 +85,7 @@ class ListFriend extends Component {
         
         <Content>
             <Separator bordered>
-                  <Text>Nouveau</Text>
+                  <Text>{I18n.t('listFacebook_text2')}</Text>
             </Separator>
 
              <List>
@@ -97,8 +97,8 @@ class ListFriend extends Component {
 
          <Footer transparant style={styles.footer}>
             <View style={{alignItems: 'center'}}>
-                  <Button style={styles.buttonfooter} onPress={ () => this.props.followAll()}>
-                      <Text>Suivre tous</Text>
+                  <Button style={styles.buttonfooter} onPress={ () => this.followAll()}>
+                      <Text>{I18n.t('listFacebook_btn2')}</Text>
                   </Button>
             </View> 
           </Footer>

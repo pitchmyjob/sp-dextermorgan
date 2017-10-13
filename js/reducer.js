@@ -9,6 +9,7 @@ import visit from './visit/VisitReducer';
 import ask from './ask/AskReducer';
 import spitch from './spitch/SpitchReducer';
 import feed from './feed/FeedReducer';
+import notification from './notification/NotificationReducer';
 
 
 const appReducer = combineReducers({
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
 	ask,
 	spitch,
 	feed,
+	notification,
 	form
 })
 

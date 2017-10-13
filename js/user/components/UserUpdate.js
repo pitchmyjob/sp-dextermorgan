@@ -10,6 +10,7 @@ import { isRequired } from '../../utils/forms/validators'
 import { ButtonGradient, ButtonLoaderGradient } from '../../themes/base'
 
 import styles from '../styles/update'
+import I18n from '../../i18n';
 
 class EditProfile extends Component {
 
@@ -63,7 +64,7 @@ class EditProfile extends Component {
                   }
 
                   <Text style={styles.txtPhoto}>
-                    Changer de photo
+                    {I18n.t('userUpdate_text1')}
                   </Text>
                 </TouchableOpacity>
 
@@ -77,7 +78,7 @@ class EditProfile extends Component {
                         <Field
                           name="username"
                           component={renderInput}
-                          placeholder="Nom d'utilisateur"
+                          placeholder={I18n.t('userUpdate_text2')}
                           icon="md-person"
                           validate={isRequired}
                           nofloating={true}
@@ -89,7 +90,7 @@ class EditProfile extends Component {
                           name="title"
                           multiline
                           component={renderInput}
-                          placeholder="Décrivez-vous"
+                          placeholder={I18n.t('userUpdate_text3')}
                           icon="md-person"
                           nofloating={true}
                         />
@@ -105,7 +106,7 @@ class EditProfile extends Component {
                 <ButtonLoaderGradient />
                 ||
                 this.props.dirty &&
-                    <ButtonGradient onPress={handleSubmit} text="ENREGISTRER" />
+                    <ButtonGradient onPress={handleSubmit} text={I18n.t('userUpdate_btn1')} />
               }
             </Body>
           </Footer>

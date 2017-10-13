@@ -7,20 +7,24 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-@import Firebase;
+#import "Firebase.h"
 #import "RNFIRMessaging.h"
 #import "AppDelegate.h"
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+
 #if __has_include(<React/RNSentry.h>)
 #import <React/RNSentry.h> // This is used for versions of react >= 0.40
 #else
 #import "RNSentry.h" // This is used for versions of react < 0.40
 #endif
+
+
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #import "RCTLinkingManager.h"
@@ -56,9 +60,12 @@
                            didFinishLaunchingWithOptions:launchOptions];
   
   [Fabric with:@[[Crashlytics class]]];
+
   
   return YES;
 }
+
+
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
@@ -77,6 +84,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler{
   [RNFIRMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
+
 
 /** faceboook analytics **/
 

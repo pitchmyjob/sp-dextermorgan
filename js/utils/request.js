@@ -43,7 +43,21 @@ export class Api {
 			.then((token) => {
 		        if(token)
 		        	this.instance.defaults.headers.common['Authorization'] = "Token "+token;
+		        if(!token)
+		        {
+		        	delete this.instance.defaults.headers.common['Authorization']
+		        }
+
 		        return this.instance.post(url, payload)
+		     })
+	}
+
+	delete(url){
+		return appAuthToken.getSessionToken()
+			.then((token) => {
+		        if(token)
+		        	this.instance.defaults.headers.common['Authorization'] = "Token "+token;
+		        return this.instance.delete(url)
 		     })
 	}
 

@@ -3,7 +3,8 @@ import { RETREIVE_VISIT_PENDING, RETREIVE_VISIT_FULFILLED, RETREIVE_VISIT_REJECT
   LIST_VISIT_SPITCH_PENDING, LIST_VISIT_SPITCH_FULFILLED, LIST_VISIT_SPITCH_REJECTED,
   NEXT_LIST_VISIT_SPITCH_PENDING, NEXT_LIST_VISIT_SPITCH_FULFILLED, NEXT_LIST_VISIT_SPITCH_REJECTED,
   LIST_VISIT_ASK_PENDING, LIST_VISIT_ASK_FULFILLED, LIST_VISIT_ASK_REJECTED,
-  NEXT_LIST_VISIT_ASK_PENDING, NEXT_LIST_VISIT_ASK_FULFILLED, NEXT_LIST_VISIT_ASK_REJECTED } from './VisitConstants'
+  NEXT_LIST_VISIT_ASK_PENDING, NEXT_LIST_VISIT_ASK_FULFILLED, NEXT_LIST_VISIT_ASK_REJECTED,
+  UNFOLLOW_VISIT } from './VisitConstants'
 
 const INITIAL_STATE = {
   profile:{ pending:false, fulfilled:false, error:null, data:null },
@@ -72,6 +73,12 @@ export default function(state = INITIAL_STATE, action) {
             list: state.ask.list.concat(action.payload.data.results), 
             pagination: {...action.payload.data, results: undefined } } 
           }
+
+
+    case UNFOLLOW_VISIT:
+      var newdata = state.profile.data
+      newdata.follow = false
+      return { ...state, profile: { ...state.profile, data : newdata } }
 
 
     default:

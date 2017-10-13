@@ -6,7 +6,8 @@ import { retreiveVisit, retreiveVisitDatas, listVisitSpitch, nextListVisitSpitch
 
 function mapStateToProps(state, ownProps) {
   return { 
-  	visit: state.visit
+  	visit: state.visit,
+    user: state.user
   };
 }
 

@@ -56,7 +56,9 @@ class SwipeAsk extends Component {
         this.setState({index:this.state.index-1, progress:0.001})
     }
     if(this.state.index == 0){
-        this.player.seek(0)
+        if(this.player){
+          this.player.seek(0)
+        }
     }
     if(this.state.paused == true){
         this.setState({paused:false})
@@ -66,7 +68,9 @@ class SwipeAsk extends Component {
   onEnd(){
     this.setState({progress:1})
     this.nextVideo()
-    this.player.seek(0)
+    if(this.player){
+        this.player.seek(0)
+      }
   }
 
   back(){

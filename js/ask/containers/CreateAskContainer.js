@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux'
 import { createAsk } from '../AskActions'
 import CreateAsk from '../components/CreateAsk' ;
 
+import I18n from '../../i18n';
 
 
 function mapStateToProps(state, ownProps) {
@@ -22,8 +23,8 @@ const config = {
 	      .then((response) => {
 
 	          Alert.alert(
-				  'Bravo',
-				  'Question envoyé !',
+  				  I18n.t('createAsk_act1'),
+  				  I18n.t('createAsk_act2'),
 				  [
 				    {text: 'OK', onPress: () => Actions.pop()},
 				  ],
@@ -31,14 +32,14 @@ const config = {
 				)
 
 	      }).catch((error) => {
-	          Alert.alert('Erreur', "Veuillez recommencer")
+	          Alert.alert(I18n.t('createAsk_act3'), I18n.t('createAsk_act4'))
 	      })
   },
   onSubmitFail : (error, dispatch,submitError) => {
   	console.log(error)
   	console.log(submitError)
 
-  	Alert.alert('Désolé', "Votre question semble un peu courte")
+  	Alert.alert(I18n.t('createAsk_act5'), I18n.t('createAsk_act6'))
 
   }
 }

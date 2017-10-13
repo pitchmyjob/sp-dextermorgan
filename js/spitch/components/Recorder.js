@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Image, TouchableOpacity, View, Text, StatusBar, Alert, Platform} from 'react-native';
 import { Container, Content, Icon, Item, Spinner} from 'native-base';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 import Camera from 'react-native-camera';
 import styles from '../styles/recorder'
-
+import I18n from '../../i18n';
 
 
 
@@ -30,7 +30,8 @@ class Recorder extends Component {
       },
       isRecording: false,
       marker:[],
-      display:null
+      display:null,
+      device: Platform.select({ios: 'ios', android: 'android'})
     };
   }
 
@@ -88,11 +89,12 @@ class Recorder extends Component {
 
     if (this.state.marker.length > 0) {
       Alert.alert(
-        'Confirmation',
-        'Voulez-vous supprimer le dernier enregistrement ?',
+        I18n.t('recorder_act1'),
+        I18n.t('recorder_act2'),
         [
           {text: 'Oui', onPress: () => {
               this.props.removeClip()
+              console.log('okkkk')
               this.setState({marker: this.state.marker.slice(0, -1) })
               var timer = 0 
               if (this.state.marker.length > 0)
@@ -100,7 +102,7 @@ class Recorder extends Component {
               this.refs.circularProgress.performLinearAnimation(timer, 600)
               this.setState({timer})
           }},
-          {text: 'Annuler'},
+          {text: I18n.t('recorder_act3')},
         ],
         { cancelable: false }
       )
@@ -150,6 +152,14 @@ class Recorder extends Component {
       },
     });
 
+  }
+
+  back(){
+      if(this.props.backtoswipe){
+        Actions.swipeask({type:ActionConst.REPLACE})
+      }else{
+        this.props.back()
+      }
   }
 
   renderButtonPlay(){
@@ -215,7 +225,7 @@ class Recorder extends Component {
           playSoundOnCapture={false}
         > 
 
-              <Item style={styles.question} onPress={() => this.props.back()} >
+              <Item style={styles.question} onPress={() => this.back()} >
                   <Icon name="ios-arrow-back-outline" style={styles.icon} />
                   <Text style={styles.color}>
                       {this.props.text}
@@ -269,12 +279,22 @@ class Recorder extends Component {
                 </View>
               } 
 
-              {this.state.display && !this.state.isRecording && 
+              {this.state.display && !this.state.isRecording && 1==2 &&
                <View style={styles.btncontrol}>
                   
-                  <TouchableOpacity onPress={() => this.switchType() }>
-                      <Image source={require('../../../assets/images/switch.png')} style={{marginTop:20}}/>
-                  </TouchableOpacity>
+                  {this.state.device == "ios" && 
+                    <TouchableOpacity onPress={() => this.switchType() }>
+                        <Image source={require('../../../assets/images/switch.png')} style={{marginTop:20}}/>
+                    </TouchableOpacity>
+                  }
+
+                  {this.state.device == "android" && this.state.marker.length > 0 &&
+                    <TouchableOpacity onPress={() => this.switchType() }>
+                        <Image source={require('../../../assets/images/switch.png')} style={{marginTop:20}}/>
+                    </TouchableOpacity>
+                  }
+
+
                </View>
                }
               

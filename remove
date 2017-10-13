@@ -1,0 +1,14 @@
+remove :
+
+
+Libraries:
+	RNSentry.xcodeproj
+
+
+Link Binary :
+	libRNSentry.a
+	libKSCrashlib
+
+
+Header Search Paths:
+	.../react-native-sentry/ios

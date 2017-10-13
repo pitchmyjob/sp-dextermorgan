@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Platform, Text } from 'react-native';
-import { DefaultRenderer } from 'react-native-router-flux';
+import { DefaultRenderer, Actions } from 'react-native-router-flux';
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from "react-native-fcm";
 
 import { api }  from './utils/request'
@@ -31,8 +31,32 @@ export default class PushController extends Component {
       console.log("Notification", notif);
       if(notif.local_notification){
         return;
+
       } 
       if(notif.opened_from_tray){
+        if(notif.type == "1"){
+          var user = JSON.parse(notif.user)
+          Actions.visit({id:user['id']['N']})
+        }
+        if(notif.type == "3"){
+          var obj = JSON.parse(notif.obj)
+          Actions.recorder({id:obj['id']['N'], text:obj['text']['S']})
+        }
+        if(notif.type == "5" || notif.type == "6" || notif.type == "2"){
+          var user = JSON.parse(notif.user)
+          var obj = JSON.parse(notif.obj)
+          var item = {
+            spitch_transcoded: obj['spitch_transcoded']['S'],
+            ask: { text: obj['text']['S'] },
+            id: obj['spitch']['N'],
+            user: {
+              username: user['username']['S'],
+              photo: user['photo']['S'],
+              id: user['id']['N']
+            }
+          }
+          Actions.video({item:item})
+        }
         return;
       } 
 
@@ -56,10 +80,10 @@ export default class PushController extends Component {
       this.showLocalNotification(notif);
     });
 
-    this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, fcm => {
-      // console.log("TOKEN (refreshUnsubscribe)", token);
-      api.patch('/auth/fcm/', {fcm}).catch(error => console.log(error))
-    });
+    // this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, fcm => {
+    //   // console.log("TOKEN (refreshUnsubscribe)", token);
+    //   api.patch('/auth/fcm/', {fcm}).catch(error => console.log(error))
+    // });
   }
 
   showLocalNotification(notif) {

@@ -4,6 +4,7 @@ import { Container, Spinner, Content, Footer, List, ListItem, Thumbnail, Text, B
 import { Actions } from 'react-native-router-flux';
 
 import styles from '../styles/relation'
+import I18n from '../../i18n';
 
 
 class Relation extends Component {
@@ -30,13 +31,13 @@ class Relation extends Component {
 
   renderList(){
       const { fulfilled, error, list } = this.props.relation ;
-      const { followFriend, user} = this.props
+      const { followFriend, user, unfollowFriend} = this.props
 
       if(error){
 
         return(
           <ListItem >
-            <Text style={{color: 'red'}}>Erreur...</Text>
+            <Text style={{color: 'red'}}>{I18n.t('listRelation_text1')}</Text>
           </ListItem>
         )
 
@@ -47,8 +48,10 @@ class Relation extends Component {
                 return(
                     <ListItem avatar key={friend.id} style={{paddingTop:5,paddingBottom:5}}>
 
-                        <Left>
-                            <Thumbnail small source={{uri:friend.photo+".115x115"}} />
+                        <Left >
+                            <TouchableOpacity onPress={() => Actions.visit({id:friend.id})}>
+                              <Thumbnail small source={{uri:friend.photo+".115x115"}} />
+                            </TouchableOpacity>
                         </Left>
                         
                         <Body style={{paddingBottom:10}}>
@@ -61,12 +64,12 @@ class Relation extends Component {
                         {friend.id != user.id &&
                           <Right>
                             {friend.follow &&
-                              <Button small bordered>
+                              <Button small bordered onPress={() => unfollowFriend(friend.id) }>
                                   <Icon name='checkmark' style={{color:'blue'}}/>
                               </Button>
                               ||
                               <Button small primary onPress={() => followFriend(friend.id) }>
-                                  <Text>Suivre </Text>
+                                  <Text>{I18n.t('listRelation_btn1')}</Text>
                               </Button>
                             }
                           </Right>
@@ -77,7 +80,7 @@ class Relation extends Component {
           }else{
             return(
                 <ListItem style={{ alignItems:'center', 'justifyContent':'center'}}>
-                    <Text>Aucun utilisateur trouvé</Text>
+                    <Text>{I18n.t('listRelation_text2')}</Text>
                 </ListItem>
               )
           }
@@ -100,7 +103,7 @@ class Relation extends Component {
         
         <Item>
             <Icon active name='ios-search-outline' style={{paddingLeft:20, paddingRight:10}}/>
-            <Input placeholder='Rechercher' onChangeText={(text) => this.searchUpdated(text)} />
+            <Input placeholder={I18n.t('listRelation_text3')} onChangeText={(text) => this.searchUpdated(text)} />
         </Item>
 
         <Content>

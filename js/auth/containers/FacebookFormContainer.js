@@ -8,6 +8,8 @@ import FacebookForm from '../components/FacebookForm'
 import { userNotExists, authRegisterFacebook } from '../AuthActions'
 import { userAuthenticated } from '../../user/UserActions'
 
+import I18n from '../../i18n';
+
 
 function mapStateToProps(state, ownProps) {
   return { 
@@ -18,22 +20,24 @@ function mapStateToProps(state, ownProps) {
 const config = {
   form: 'FacebookForm', 
   onSubmit: (values, dispatch, props) => {
-      return dispatch(userNotExists({username:values['username']}))
+    var val = {}
+    val["username"] = values['username']
+      return dispatch(userNotExists(val))
       .then((response) => {
 
           return dispatch(authRegisterFacebook(values))
           .then((response) => {
 
               dispatch(userAuthenticated(response.action.payload.data.user))
-              Actions.contact({type: ActionConst.REPLACE, rightTitle:"Passer", onRight:() => Actions.tabbar() })
+              Actions.contact({type: ActionConst.REPLACE, register:true, rightTitle:I18n.t('contact_nxt'), onRight:() => Actions.tabbar() })
               appAuthToken.storeSessionToken(response.action.payload.data.token) 
 
             }).catch((error) => {
-                Alert.alert('Erreur', "Veuillez ressayer")
+                Alert.alert(I18n.t('facebookForm_act1'), I18n.t('facebookForm_act2'))
             })
 
       }).catch((error) => {
-          throw new SubmissionError({ username: "Ce nom d'utilisateur est déjà utilisé" })
+          throw new SubmissionError({ username: I18n.t('facebookForm_act3') })
       })  
   }
 }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import ListRelation from '../components/ListRelation';
 
-import { listFollow, followUser, listFollower } from '../RelationActions';
+import { listFollow, followUser, unfollowUser, listFollower, activeFollowUser, unactiveFollowUser } from '../RelationActions';
 
 
 function mapStateToProps(state, ownProps) {
@@ -27,8 +27,12 @@ function mapDispatchToProps(dispatch){
       return dispatch(listFollower(id, search))
     },
     followFriend: (id) => {
-    	// dispatch({type:'FOLLOW_LIST_FOLLOW_FOLLOWER', meta:{id:id} })
-    	// return dispatch(followUser(id))
+      dispatch(activeFollowUser(id))
+      return dispatch(followUser(id))
+    },
+    unfollowFriend: (id) => {
+      dispatch(unactiveFollowUser(id))
+    	return dispatch(unfollowUser(id))
     }
   }
 }

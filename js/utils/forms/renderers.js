@@ -40,7 +40,7 @@ export const renderInputAsk = (field) => {
           placeholder={field.placeholder}
           multiline
           maxLength={140}
-          style={{height:70}}
+          style={{height:120, textAlignVertical: 'top'}}
           autoFocus={true}
           onChange={onChange} 
         />

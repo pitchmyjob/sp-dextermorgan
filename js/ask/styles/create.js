@@ -14,7 +14,8 @@ export default {
     width:30,
     height:30,
     borderRadius: 15,
-    marginRight:15
+    marginRight:15,
+    marginTop:5
   },
   body:{
     paddingTop:15,

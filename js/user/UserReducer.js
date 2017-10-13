@@ -5,7 +5,8 @@ import { USER_AUTHENTICATED,
   LIST_USER_SPITCH_PENDING, LIST_USER_SPITCH_FULFILLED, LIST_USER_SPITCH_REJECTED,
   NEXT_LIST_USER_SPITCH_PENDING, NEXT_LIST_USER_SPITCH_FULFILLED, NEXT_LIST_USER_SPITCH_REJECTED,
   LIST_USER_ASK_PENDING, LIST_USER_ASK_FULFILLED, LIST_USER_ASK_REJECTED,
-  NEXT_LIST_USER_ASK_PENDING, NEXT_LIST_USER_ASK_FULFILLED, NEXT_LIST_USER_ASK_REJECTED } from './UserConstants'
+  NEXT_LIST_USER_ASK_PENDING, NEXT_LIST_USER_ASK_FULFILLED, NEXT_LIST_USER_ASK_REJECTED,
+  REMOVE_LIST_USER_SPITCH,  } from './UserConstants'
 
 const INITIAL_STATE = {
   profile:{ pending:false, fulfilled:false, error:null, data:null },
@@ -85,6 +86,14 @@ export default function(state = INITIAL_STATE, action) {
             pagination: {...action.payload.data, results: undefined } } 
           }
 
+    case REMOVE_LIST_USER_SPITCH:
+        return { ...state, spitch: { ...state.spitch,  
+            list: state.spitch.list.filter(function(item) {
+               if(item.id != action.id){
+                  return item
+               }
+            })
+      }}
 
     default:
     	return state;

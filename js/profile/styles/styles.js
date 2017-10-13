@@ -49,6 +49,7 @@ export default {
     shadowOpacity: 0,
     elevation: 0,
     paddingBottom:5,
+    flex:1
   },
   thumb:{
     top:50,

@@ -44,7 +44,7 @@ export const listVisitAsk = (id) => {
 export const nextListVisitAsk = (id, cursor) => {
 	return {
       type: NEXT_LIST_VISIT_ASK,
-      payload: api.get('user/'+id+'/spitch/?cursor='+cursor)
+      payload: api.get('user/'+id+'/ask/?cursor='+cursor)
   }
 }
 

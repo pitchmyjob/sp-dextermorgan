@@ -6,6 +6,7 @@ import { userNotExists } from '../../auth/AuthActions'
 import { updateUser } from '../UserActions'
 
 import UserUpdate from '../components/UserUpdate'
+import I18n from '../../i18n';
 
 
 function mapStateToProps(state, ownProps) {
@@ -24,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
         return dispatch(updateUser({photo})).then((response) => {
             Toast.show({
                 type: 'success',
-                text: 'Enregistré',
+                text: I18n.t('userUpdate_act1'),
                 position: 'bottom',
                 duration:2000
               })
@@ -45,7 +46,7 @@ const config = {
           return dispatch(updateUser({title:values['title']})).then((response) => {
               Toast.show({
                   type: 'success',
-                  text: 'Enregistré',
+                  text: I18n.t('userUpdate_act1'),
                   position: 'bottom',
                   duration:2000
                 })
@@ -61,7 +62,7 @@ const config = {
                   return dispatch(updateUser(values)).then((response) => {
                     Toast.show({
                       type: 'success',
-                      text: 'Enregistré',
+                      text: I18n.t('userUpdate_act1'),
                       position: 'bottom',
                       duration:2000
                     })
@@ -71,7 +72,7 @@ const config = {
                 })  
 
             }).catch((error) => {
-                throw new SubmissionError({ username: "Ce nom d'utilisateur est déjà utilisé" })
+                throw new SubmissionError({ username: I18n.t('userUpdate_act2') })
             }) 
 
         } 

@@ -36,6 +36,8 @@ class Profile extends Component {
           
           {this.state.choice == 1 &&
             <ListSpitch 
+              me={this.props.me}
+              deleteSpitch={this.props.deleteSpitch}
               refreshProfile={this.props.refreshProfile}
               user={this.props.user} 
               changeChoice={this.changeChoice}
@@ -47,6 +49,7 @@ class Profile extends Component {
 
           {this.state.choice == 2 &&
             <ListAsk
+              me={this.props.me}
               refreshProfile={this.props.refreshProfile} 
               user={this.props.user} 
               changeChoice={this.changeChoice} 

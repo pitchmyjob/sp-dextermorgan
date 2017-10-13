@@ -1,21 +1,48 @@
 import React, { Component } from 'react';
-import { Button, Spinner} from 'native-base';
-import { Text, Image, View, TouchableOpacity, FlatList } from 'react-native';
+import { Button, Spinner, ActionSheet } from 'native-base';
+import { Text, Image, View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import styles from '../styles/styles'
 
 import Header from '../containers/ProfileHeaderContainer'
+import I18n from '../../i18n';
 
 
 class ListSpitchProfile extends Component {
 
   constructor(props) { 
     super(props);
+    this.actionFeed = this.actionFeed.bind(this)
     this.onEndReached = this.onEndReached.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
+    this.renderItem = this.renderItem.bind(this)
     this.state={ 
       refresh:false
+    }
+  }
+
+  actionFeed(item){
+    if(this.props.me){
+      ActionSheet.show(
+          {
+            options: [ I18n.t('listSpitchProfile_act1'), I18n.t('listSpitchProfile_act2')],
+            cancelButtonIndex: 1,
+          },
+          buttonIndex => {
+            if(buttonIndex == 0){
+                 Alert.alert(
+                  I18n.t('listSpitchProfile_act3'),
+                  I18n.t('listSpitchProfile_act4'),
+                  [
+                    {text: I18n.t('listSpitchProfile_act5'), onPress: () => this.props.deleteSpitch(item.id) },
+                    {text: I18n.t('listSpitchProfile_act6')}
+                  ],
+                  { cancelable: false }
+                )
+            }
+          }
+      )
     }
   }
 
@@ -30,7 +57,10 @@ class ListSpitchProfile extends Component {
 
     }else{
     return (  
-        <TouchableOpacity onPress={() => Actions.video({item:item})} >
+        <TouchableOpacity 
+          onPress={() => Actions.video({item:item})}
+          onLongPress={() => this.actionFeed(item)} 
+          >
             <Image
               key={item.id}
               style={styles.thumbSpitch} 
@@ -64,7 +94,7 @@ class ListSpitchProfile extends Component {
             
             <FlatList
                 ListHeaderComponent={() => 
-                  <Header user={this.props.user} changeChoice={this.props.changeChoice} choice={this.props.choice} changeFollow={this.props.changeFollow} follow={this.props.follow}  />
+                  <Header user={this.props.user} me={this.props.me} changeChoice={this.props.changeChoice} choice={this.props.choice} changeFollow={this.props.changeFollow} follow={this.props.follow}  />
                 }
                 data={this.props.user.spitch.list}
                 renderItem={this.renderItem}

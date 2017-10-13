@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Spinner } from 'native-base';
 
+import { Actions, ActionConst } from 'react-native-router-flux'
 import Profile from '../../profile/components/Profile'
 
 
@@ -23,12 +24,12 @@ class VisitProfile extends Component {
   }
 
   nextListVisitSpitch(){
-    if(this.props.visit.spitch.pagination.next_cursor)
+    if(this.props.visit.spitch.pagination)
         this.props.nextListVisitSpitch(this.props.id, this.props.visit.spitch.pagination.next_cursor)
   }
 
   nextListVisitAsk(){
-    if(this.props.visit.ask.pagination.next_cursor)
+    if(this.props.visit.ask.pagination)
         this.props.nextListVisitAsk(this.props.id, this.props.visit.ask.pagination.next_cursor)
   }
 
@@ -38,13 +39,22 @@ class VisitProfile extends Component {
       this.props.listVisitAsk(this.props.id)
   }
 
+  // componentWillReceiveProps(nextProps) {
+    
+  //   if(nextProps.visit.profile.fulfilled){
+  //     if(nextProps.visit.profile.data.id == this.props.user.profile.data.id){
+  //       console.log('okkk')
+  //     }
+  //   }
+  // }
+
   render() {
       const { visit } = this.props
 
       return (
         <View style={{flex:1}}>
             {visit.profile.fulfilled &&
-              <Profile user={visit} nextListSpitch={this.nextListVisitSpitch} nextListAsk={this.nextListVisitAsk} refreshProfile={this.refreshProfile}/>
+              <Profile user={visit} nextListSpitch={this.nextListVisitSpitch} nextListAsk={this.nextListVisitAsk} refreshProfile={this.refreshProfile} />
             }
         </View>
       );

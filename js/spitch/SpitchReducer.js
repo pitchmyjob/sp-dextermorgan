@@ -1,11 +1,13 @@
 import {
-    RESET_VIDEOS,
-    INIT_NEW_SPITH, ADD_CLIP_NEW_SPITCH, REMOVE_CLIP_NEW_SPITCH, MERGE_CLIP_NEW_SPITCH,
+    RESET_VIDEOS, REMOVE_SPITCH_LIST,
+    INIT_NEW_SPITH, ADD_CLIP_NEW_SPITCH, REMOVE_CLIP_NEW_SPITCH, MERGE_CLIP_NEW_SPITCH, RESET_MERGE_CLIP_NEW_SPITCH,
     UPLOAD_SPITCH_PENDING, UPLOAD_SPITCH_FULFILLED, UPLOAD_SPITCH_REJECTED,
     LIKE_SPITCH_PENDING, LIKE_SPITCH_FULFILLED, LIKE_SPITCH_REJECTED,
     RETRIEVE_SPITCH_PENDING, RETRIEVE_SPITCH_FULFILLED, RETRIEVE_SPITCH_REJECTED,
     LIST_SPITCH_ASK_PENDING, LIST_SPITCH_ASK_FULFILLED, LIST_SPITCH_ASK_REJECTED,
-    NEXT_LIST_SPITCH_ASK_PENDING, NEXT_LIST_SPITCH_ASK_FULFILLED, NEXT_LIST_SPITCH_ASK_REJECTED
+    NEXT_LIST_SPITCH_ASK_PENDING, NEXT_LIST_SPITCH_ASK_FULFILLED, NEXT_LIST_SPITCH_ASK_REJECTED,
+    REPORT_SPITCH_PENDING, REPORT_SPITCH_FULFILLED, REPORT_SPITCH_REJECTED,
+    DELETE_SPITCH_PENDING, DELETE_SPITCH_FULFILLED, DELETE_SPITCH_REJECTED,
 } from './SpitchConstants'
 
 
@@ -14,6 +16,8 @@ const INITIAL_STATE = {
     like: {pending: false, fulfilled: false, error: null},
     video: {pending: false, fulfilled: false, error: null, data:null},
     videos: {pending: false, fulfilled: false, error: null, list:[], pagination: null, nextPending: false, nextFetched: false},
+    report: {pending: false, fulfilled: false, error: null},
+    delete: {pending: false, fulfilled: false, error: null},
 };
 
 
@@ -30,6 +34,8 @@ export default function(state = INITIAL_STATE, action) {
     	return { ...state, recorder: { ...state.recorder, clips: state.recorder.clips.slice(0, -1) } }
     case MERGE_CLIP_NEW_SPITCH:
         return { ...state, recorder: { ...state.recorder, video: action.video } }
+    case RESET_MERGE_CLIP_NEW_SPITCH:
+        return { ...state, recorder: { ...state.recorder, video: null } }
 
     case UPLOAD_SPITCH_PENDING:
         return { ...state, recorder: { ...state.recorder, pending: true, fulfilled: false, error: null } }
@@ -76,6 +82,21 @@ export default function(state = INITIAL_STATE, action) {
             error:null, 
             list: state.videos.list.concat(action.payload.data.results), 
             pagination: {...action.payload.data, results: undefined}  } }
+
+    case REPORT_SPITCH_PENDING:
+        return { ...state, report: { pending: true, fulfilled: false, error: null } }
+    case REPORT_SPITCH_FULFILLED:
+        return { ...state, report: { pending: false, fulfilled: true, error:null } }
+    case REPORT_SPITCH_REJECTED:
+        return { ...state, report: { pending: false, fulfilled: false, error:action.error } }
+
+    case DELETE_SPITCH_PENDING:
+        return { ...state, delete: { pending: true, fulfilled: false, error: null } }
+    case DELETE_SPITCH_FULFILLED:
+        return { ...state, delete: { pending: false, fulfilled: true, error:null } }
+    case DELETE_SPITCH_REJECTED:
+        return { ...state, delete: { pending: false, fulfilled: false, error:action.error } }
+        
     
     default:
     	return state;

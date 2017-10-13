@@ -5,6 +5,7 @@ import { Platform, Text, Image } from 'react-native';
 import { StyleProvider, Icon, View } from 'native-base';
 import getTheme from '../native-base-theme/components';
 import variables from '../native-base-theme/variables/commonColor';
+import I18n from './i18n';
 
 import configureStore from './configureStore';
 
@@ -33,6 +34,9 @@ import Video from './spitch/containers/VideoContainer'
 import SwipeVideo from './spitch/containers/SwipeVideoContainer'
 
 import ListFeed from './feed/containers/ListFeedContainer'
+
+import Notification from './notification/containers/NotificationContainer'
+import IconNotification from './notification/containers/IconNotificationContainer'
 
 
 const ConnectedRouter = connect()(Router);
@@ -63,20 +67,37 @@ const sceneStyleTabbar = {
 class CloseButton extends React.Component {
     render(){
       return (
-          <Icon name="ios-close-outline" onPress={this.props.onPress} style={{...this.props.styles, fontSize:34, marginRight:10, backgroundColor:'transparent'}}/>
+          <Icon name="ios-close-outline" onPress={this.props.onPress} style={{...this.props.styles, paddingLeft:20, paddingRight:5, paddingBottom:10, zIndex:10000, fontSize:34, marginRight:10, backgroundColor:'transparent'}}/>
       );
     }
 }
 
+
 const tab = ({ selected, title, iconName }) => {
   const selectColor = selected ? '#ED1B25' : '#FFF'
+
+  const styleSpitch = Platform.select({ios: { width:55, height:55, bottom:3, position:'absolute'}, android: { width:45, height:45, position:'absolute'}, })
+
   if(iconName){
-      return (
-        <Icon name={iconName} style={{color: selected ? '#0064D4' :'black'}} />
-      )
+      if(iconName == "ios-person"){
+        if(selected){
+          return (<Image source={require('../assets/images/icon-profil-filled.png')} style={{height:23, width:20}}/>)
+        }else{
+          return (<Image source={require('../assets/images/icon-profil.png')} style={{height:23, width:20}}/>)
+        }
+      }
+
+      if(iconName == "ios-square"){
+        if(selected){
+          return (<Image source={require('../assets/images/icon-home-filled.png')} style={{height:23, width:20}}/>)
+        }else{
+          return (<Image source={require('../assets/images/icon-home.png')} style={{height:23, width:20}}/>)
+        }
+      }
+
   }else{
     return (
-        <Image source={require('../assets/images/tabbarspitch.png')} style={{ width:50, height:50}}/>
+        <Image source={require('../assets/images/tabbarspitch.png')} style={styleSpitch}/>
     )
   }  
 }
@@ -85,28 +106,28 @@ const Scenes = Actions.create(
     <Scene key='root' >
 
         <Scene key="home" initial component={Home} hideNavBar  />
-        <Scene {...sceneStyle} key="facebookForm"  component={FacebookForm} title="S'INSCRIRE"   />  
+        <Scene {...sceneStyle} key="facebookForm"  component={FacebookForm} title={I18n.t('facebookForm_register')}   />  
         <Scene {...sceneStyleNoBorder} key="contact" component={Contact} rightButtonTextStyle={{'color':'#BABCBE'}} />   
-        <Scene {...sceneStyle} key="listFacebook"  component={ListFacebook}  title="Amis de facebook"  />
+        <Scene {...sceneStyle} key="listFacebook"  component={ListFacebook}  title={I18n.t('listFacebook_title')}  />
 
         <Scene key="tabbar" component={PushController} >
             <Scene key="tabbar2" tabs={true} style={{borderTopWidth:1, borderTopColor: '#cccccc', backgroundColor:'white'}} >
 
-
-                <Scene {...sceneStyleTabbar} key="feed" title="Spitch" icon={tab} iconName="ios-square-outline" component={ListFeed} titleStyle={{fontSize: 20, fontWeight:'500'}}/>
+                <Scene {...sceneStyleTabbar} key="feed" title="Spitch" icon={tab} iconName="ios-square" component={ListFeed} 
+                  titleStyle={{fontSize: 20, fontWeight:'500'}} renderRightButton={() => <IconNotification />} />
 
                 <Scene key="spitch" title="" component={() => null} icon={tab}  hideTabBar 
                   onSelect={() => Actions.swipeask()}  />
 
-                <Scene key="user" icon={tab} iconName="md-person" hideNavBar component={UserProfile} />
+                <Scene key="user" icon={tab} iconName="ios-person" hideNavBar component={UserProfile} />
 
-                
             </Scene>
         </Scene>
 
-        <Scene {...sceneStyleNoBorder} key="userupdate" title="Modifier mon profil" component={UserUpdate}   /> 
-        <Scene {...sceneStyleNoBorder} key="settings" title="Parametre du compte" component={UserSettings} /> 
-        <Scene {...sceneStyleNoBorder} key="relation" component={ListRelation} title="Abonné" titleStyle={{fontSize: 18, fontWeight:'500'}} /> 
+        <Scene {...sceneStyle} key="notification" component={Notification} title="Notification" />
+        <Scene {...sceneStyleNoBorder} key="userupdate" title={I18n.t('userUpdate_title')} component={UserUpdate}   /> 
+        <Scene {...sceneStyleNoBorder} key="settings" title={I18n.t('userUpdate_title')} component={UserSettings} /> 
+        <Scene {...sceneStyleNoBorder} key="relation" component={ListRelation} title={I18n.t('listRelation_title')}  titleStyle={{fontSize: 18, fontWeight:'500'}} /> 
 
         <Scene {...sceneNavTransparent} key="visit" component={VisitProfile} leftButtonIconStyle={{'tintColor':'white'}} hideNavBar={false}/> 
 
@@ -115,13 +136,15 @@ const Scenes = Actions.create(
 
         <Scene key="recorder" showNavigationBar={false}  animation="fade" component={Recorder} hideNavBar />
         <Scene key="replay" showNavigationBar={false}  component={Replay} hideNavBar />
-        <Scene key="video" showNavigationBar={false} component={Video} hideNavBar animation="fade" />
+        <Scene key="video" showNavigationBar={false} component={Video} hideNavBar direction="vertical" animation="fade" />
         <Scene key="swipevideo"  showNavigationBar={false} component={SwipeVideo} hideNavBar animation="fade" />
+
+       
 
         <Scene {...sceneStyle} key="share" title="Partager" direction="vertical" component={Share} renderBackButton={()=>(null)} 
               renderRightButton={() => <CloseButton styles={{color:'#4A4A4A'}} onPress={() => Actions.tabbar({type:ActionConst.RESET})} />}/>
 
-        <Scene {...sceneStyleNoBorder} key="ask" title="Posez votre question" direction="vertical" component={CreateAsk} icon={tab} renderBackButton={()=>(null)}
+        <Scene {...sceneStyleNoBorder} key="ask" title={I18n.t('createAsk_title')} direction="vertical" component={CreateAsk} icon={tab} renderBackButton={()=>(null)}
                 renderRightButton={() => <CloseButton styles={{color:'#4A4A4A'}} onPress={() => Actions.pop()} />}/>
 
 
