@@ -9,10 +9,10 @@
 install fbsdk
 https://github.com/facebook/react-native-fbsdk#32-ios-project
 
-puis suivre step https://developers.facebook.com/docs/ios/getting-started/
+then follow step https://developers.facebook.com/docs/ios/getting-started/
 
-Ne pas oublier :
-ajouter “~/Documents/FacebookSDK” dans “Build Settings” > “Framework Search Paths” (cd https://tylermcginnis.com/installing-the-facebook-sdk-into-a-react-native-android-and-ios-app/ )
+don't forget :
+add “~/Documents/FacebookSDK” in “Build Settings” > “Framework Search Paths” (cd https://tylermcginnis.com/installing-the-facebook-sdk-into-a-react-native-android-and-ios-app/ )
 
 ```
 [[FBSDKApplicationDelegate sharedInstance] application:application
@@ -24,14 +24,14 @@ ajouter “~/Documents/FacebookSDK” dans “Build Settings” > “Framework S
 {
 ....
 ```
-juste avant 
+before
 
 ```
 return YES;
 }
 ```
 
-le reste, mettre à la fin
+rest, put to end
 ```
 /** faceboook analytics **/
 
@@ -64,7 +64,7 @@ react-native link react-native-fcm
 and follow steps : 
 https://github.com/evollu/react-native-fcm#shared-steps
 
-ne pas faire 'pod install Firebase/Messaging' mais : (cf : https://github.com/evollu/react-native-fcm/issues/23 )
+don't 'pod install Firebase/Messaging' but : (cf : https://github.com/evollu/react-native-fcm/issues/23 )
 ```
 cd ios
 pod init
@@ -127,10 +127,10 @@ npm install --save react-native-simple-auth
 puis install deep Linking : 
 https://facebook.github.io/react-native/docs/linking.html
 
-mettre : $(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS  dans Header Search Paths
-et drag RTCLinking dans Link Binary With Libraries
+set : $(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS  in Header Search Paths
+and drag RTCLinking dans Link Binary With Libraries
 
-Si pas de fdk-sdk, dans AppDelegate.m, ne pas mettre ce qu'il y a dans la doc mais mettre ça :
+if no fdk-sdk, in AppDelegate.m, don't set which is indicate in the doc but set this :
 
 ```
 (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
@@ -141,7 +141,7 @@ sourceApplication:sourceApplication annotation:annotation];
 }
 ```
 
-Si fdk-sdk, pour eviter colision avec Le "linking" fb, mettre ça à la place :
+If fdk-sdk, to avoid collision "linking" fb, set this instead :
 
 ```
 - (BOOL)application:(UIApplication *)application
@@ -163,7 +163,7 @@ Si fdk-sdk, pour eviter colision avec Le "linking" fb, mettre ça à la place :
   }
 ```
 
-Dans Info.plist, ajouter dans 'CFBundleURLTypes'
+In Info.plist, Add 'CFBundleURLTypes'
 
 ```
 <dict>
@@ -190,7 +190,7 @@ https://github.com/evollu/react-native-fcm#android-configuration
 
 ### Facebook SDK
 
-suivre doc : https://github.com/facebook/react-native-fbsdk
+follow : https://github.com/facebook/react-native-fbsdk
 
 ### Twitter connect :
 https://github.com/adamjmcgrath/react-native-simple-auth
